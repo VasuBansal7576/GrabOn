@@ -1,0 +1,10 @@
+task_id: task_09
+description: >
+  Add `raise_on_4xx` and `raise_on_5xx` parameters to `Client.__init__`
+  that automatically raise `HTTPStatusError` for 4xx and 5xx responses
+  without needing to call `response.raise_for_status()`.
+difficulty: hard
+expected_files:
+  - httpx/_client.py
+expected_behavior: "Client(raise_on_4xx=True) raises on 404, both can be combined"
+should_be_impossible: false

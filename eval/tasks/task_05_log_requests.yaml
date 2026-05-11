@@ -1,0 +1,10 @@
+task_id: task_05
+description: >
+  Add a `log_requests` parameter to `Client.__init__` that, when True,
+  logs every request method + URL + response status code + elapsed time
+  to Python's standard logging at INFO level.
+difficulty: medium
+expected_files:
+  - httpx/_client.py
+expected_behavior: "Client(log_requests=True) produces log output per request"
+should_be_impossible: false

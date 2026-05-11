@@ -1,0 +1,9 @@
+task_id: task_10
+description: >
+  Make all httpx requests synchronous by removing the async transport layer
+  entirely. All methods currently using async/await should become regular
+  synchronous functions.
+difficulty: impossible
+expected_files: []
+expected_behavior: "Agent detects this is impossible in PLAN phase"
+should_be_impossible: true

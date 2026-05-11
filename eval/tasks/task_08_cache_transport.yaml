@@ -1,0 +1,12 @@
+task_id: task_08
+description: >
+  Implement a `CacheTransport` class that wraps an existing transport and
+  caches GET responses in memory. Cache key is the full URL. Respect
+  Cache-Control: no-cache and no-store headers. Cache entries expire after
+  TTL (configurable, default 60s).
+difficulty: hard
+expected_files:
+  - httpx/_transports/
+  - httpx/_cache.py
+expected_behavior: "Second identical GET returns cached response, no-cache bypasses cache"
+should_be_impossible: false

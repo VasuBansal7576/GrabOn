@@ -1,0 +1,9 @@
+task_id: task_02
+description: >
+  Add an `is_redirect` property to the `Response` class
+  that returns True if the status code is in the 3xx range.
+difficulty: easy
+expected_files:
+  - httpx/_models.py
+expected_behavior: "response.is_redirect returns bool"
+should_be_impossible: false

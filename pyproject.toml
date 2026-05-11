@@ -1,0 +1,77 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "grabonai-coder"
+version = "0.1.0"
+description = "Coding agent with tree-index retrieval, self-testing, and iterative repair"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+    # Tree-sitter AST parsing
+    "tree-sitter>=0.23.0,<0.24.0",
+    "tree-sitter-python>=0.23.0",
+
+    # LLM Providers
+    "anthropic>=0.40.0",
+    "google-generativeai>=0.8.0",
+    "groq>=0.12.0",
+
+    # Verification tools
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+    "pytest>=8.3.0",
+    "pytest-cov>=6.0.0",
+    "pytest-json-report>=1.5.0",
+    "pytest-asyncio>=0.24.0",
+
+    # CLI & UI
+    "rich>=13.9.0",
+    "typer>=0.14.0",
+
+    # Data & Config
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+    "python-dotenv>=1.0.0",
+
+    # Logging
+    "structlog>=24.4.0",
+    "orjson>=3.10.0",
+
+    # Utilities
+    "tenacity>=9.0.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "pytest-asyncio",
+]
+
+[project.scripts]
+grabonai = "src.__main__:app"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"

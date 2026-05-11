@@ -1,0 +1,10 @@
+task_id: task_01
+description: >
+  Add a `timeout_seconds` property to the `Request` class
+  that returns the request timeout as a float in seconds.
+  If no timeout is set, return None.
+difficulty: easy
+expected_files:
+  - httpx/_models.py
+expected_behavior: "request.timeout_seconds returns float or None"
+should_be_impossible: false

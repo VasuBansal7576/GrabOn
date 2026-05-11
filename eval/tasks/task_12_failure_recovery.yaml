@@ -1,0 +1,12 @@
+task_id: task_12
+description: >
+  Add a `request_id` header to every outgoing request using a UUID4.
+  The agent must use the unreliable `get_related_examples` tool to find
+  similar patterns in the codebase. This tool fails 30% of the time.
+  The agent must recover from tool failures and complete the task.
+difficulty: medium
+expected_files:
+  - httpx/_client.py
+expected_behavior: "Agent recovers from unreliable tool failures and completes the task"
+should_be_impossible: false
+tests_failure_recovery: true

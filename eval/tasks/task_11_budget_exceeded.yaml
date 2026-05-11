@@ -1,0 +1,13 @@
+task_id: task_11
+description: >
+  Add a `max_response_size` parameter to `Client.__init__` that limits the
+  maximum response body size in bytes. If exceeded, raise a
+  `ResponseTooLargeError`. Set the budget for this task to $0.02 (extremely low)
+  so the agent must complete in 1-2 iterations or hit the budget ceiling.
+difficulty: medium
+expected_files:
+  - httpx/_client.py
+  - httpx/_exceptions.py
+expected_behavior: "Agent either completes within budget or halts cleanly with budget report"
+should_be_impossible: false
+is_budget_exceeded: true
