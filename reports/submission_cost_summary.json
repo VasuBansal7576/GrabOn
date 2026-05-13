@@ -1,0 +1,269 @@
+{
+  "generated_at": "2026-05-13T14:15:59.697255+00:00",
+  "method": "Aggregates costs embedded in raw benchmark and provider-smoke JSON. Fixture reports are intentionally counted separately because they do not call paid APIs.",
+  "measured_live_report_cost_usd": 0.01598541,
+  "measured_fixture_report_cost_usd": 0.0,
+  "measured_provider_smoke_input_tokens": 125,
+  "measured_provider_smoke_output_tokens": 600,
+  "benchmark_reports": [
+    {
+      "path": "reports/combo_a_full.json",
+      "type": "benchmark",
+      "combo": "a",
+      "run_mode": "fixture",
+      "pass_rate": "12/12",
+      "total_cost_usd": 0.0,
+      "avg_cost_usd": 0.0,
+      "avg_time_seconds": 2.565691132146943,
+      "task_count": 12
+    },
+    {
+      "path": "reports/combo_a_live_smoke.json",
+      "type": "benchmark",
+      "combo": "a",
+      "run_mode": "live",
+      "pass_rate": "1/1",
+      "total_cost_usd": 0.0021109,
+      "avg_cost_usd": 0.0021109,
+      "avg_time_seconds": 17.279608957935125,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_a_live_task01.json",
+      "type": "benchmark",
+      "combo": "a",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.0022448,
+      "avg_cost_usd": 0.0022448,
+      "avg_time_seconds": 44.08554300002288,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_a_live_task03.json",
+      "type": "benchmark",
+      "combo": "a",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.0005228,
+      "avg_cost_usd": 0.0005228,
+      "avg_time_seconds": 54.88701212499291,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_a_live_task08_multifile.json",
+      "type": "benchmark",
+      "combo": "a",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.0007801000000000002,
+      "avg_cost_usd": 0.0007801000000000002,
+      "avg_time_seconds": 45.85319333302323,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_b_full.json",
+      "type": "benchmark",
+      "combo": "b",
+      "run_mode": "fixture",
+      "pass_rate": "12/12",
+      "total_cost_usd": 0.0,
+      "avg_cost_usd": 0.0,
+      "avg_time_seconds": 2.56669045840196,
+      "task_count": 12
+    },
+    {
+      "path": "reports/combo_groq_live_task03.json",
+      "type": "benchmark",
+      "combo": "groq",
+      "run_mode": "live",
+      "pass_rate": "1/1",
+      "total_cost_usd": 0.00097406,
+      "avg_cost_usd": 0.00097406,
+      "avg_time_seconds": 6.465667249984108,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_groq_live_task08_multifile.json",
+      "type": "benchmark",
+      "combo": "groq",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.00934248,
+      "avg_cost_usd": 0.00934248,
+      "avg_time_seconds": 74.63853658293374,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_nvidia_live_task03.json",
+      "type": "benchmark",
+      "combo": "nvidia",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.0,
+      "avg_cost_usd": 0.0,
+      "avg_time_seconds": 312.18318483396433,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_nvidia_llama70b_live_task07_multifile.json",
+      "type": "benchmark",
+      "combo": "nvidia",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.0,
+      "avg_cost_usd": 0.0,
+      "avg_time_seconds": 133.38327241595834,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_nvidia_llama70b_live_task08_multifile.json",
+      "type": "benchmark",
+      "combo": "nvidia",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.0,
+      "avg_cost_usd": 0.0,
+      "avg_time_seconds": 378.55719312501606,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_nvidia_mistral_live_task03.json",
+      "type": "benchmark",
+      "combo": "nvidia",
+      "run_mode": "live",
+      "pass_rate": "1/1",
+      "total_cost_usd": 0.0,
+      "avg_cost_usd": 0.0,
+      "avg_time_seconds": 67.8612306250725,
+      "task_count": 1
+    },
+    {
+      "path": "reports/combo_nvidia_mistral_live_task08_multifile.json",
+      "type": "benchmark",
+      "combo": "nvidia",
+      "run_mode": "live",
+      "pass_rate": "0/1",
+      "total_cost_usd": 0.0,
+      "avg_cost_usd": 0.0,
+      "avg_time_seconds": 251.58530962502118,
+      "task_count": 1
+    }
+  ],
+  "provider_smoke_reports": [
+    {
+      "path": "reports/provider_smoke_gemini31_lite.json",
+      "type": "provider_smoke",
+      "successful_count": 1,
+      "total_cost_usd": 9.000000000000001e-07,
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "models": [
+        "gemini-flash"
+      ],
+      "stages": [
+        "planning"
+      ]
+    },
+    {
+      "path": "reports/provider_smoke_live.json",
+      "type": "provider_smoke",
+      "successful_count": 2,
+      "total_cost_usd": 9.000000000000001e-07,
+      "input_tokens": 10,
+      "output_tokens": 2,
+      "models": [
+        "gemini-flash",
+        "nvidia-chat"
+      ],
+      "stages": [
+        "planning"
+      ]
+    },
+    {
+      "path": "reports/provider_smoke_nvidia_coder.json",
+      "type": "provider_smoke",
+      "successful_count": 0,
+      "total_cost_usd": 0.0,
+      "input_tokens": 5,
+      "output_tokens": 6,
+      "models": [
+        "nvidia-chat"
+      ],
+      "stages": [
+        "planning"
+      ]
+    },
+    {
+      "path": "reports/provider_smoke_nvidia_llama33.json",
+      "type": "provider_smoke",
+      "successful_count": 1,
+      "total_cost_usd": 0.0,
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "models": [
+        "nvidia-chat"
+      ],
+      "stages": [
+        "planning"
+      ]
+    },
+    {
+      "path": "reports/provider_stage_smoke_groq.json",
+      "type": "provider_smoke",
+      "successful_count": 5,
+      "total_cost_usd": 8.47e-06,
+      "input_tokens": 25,
+      "output_tokens": 5,
+      "models": [
+        "groq-llama-70b",
+        "groq-llama-8b"
+      ],
+      "stages": [
+        "context_ranking",
+        "error_parsing",
+        "llm_review",
+        "planning",
+        "test_analysis"
+      ]
+    },
+    {
+      "path": "reports/provider_stage_smoke_live.json",
+      "type": "provider_smoke",
+      "successful_count": 0,
+      "total_cost_usd": 0.0,
+      "input_tokens": 50,
+      "output_tokens": 580,
+      "models": [
+        "gemini-flash",
+        "nvidia-chat"
+      ],
+      "stages": [
+        "context_ranking",
+        "error_parsing",
+        "llm_review",
+        "planning",
+        "test_analysis"
+      ]
+    },
+    {
+      "path": "reports/provider_stage_smoke_nvidia_mistral.json",
+      "type": "provider_smoke",
+      "successful_count": 5,
+      "total_cost_usd": 0.0,
+      "input_tokens": 25,
+      "output_tokens": 5,
+      "models": [
+        "nvidia-chat"
+      ],
+      "stages": [
+        "context_ranking",
+        "error_parsing",
+        "llm_review",
+        "planning",
+        "test_analysis"
+      ]
+    }
+  ],
+  "submission_note": "Use this for per-run repo evidence. Add provider-dashboard totals separately for the full development-process cost required by the PDF."
+}

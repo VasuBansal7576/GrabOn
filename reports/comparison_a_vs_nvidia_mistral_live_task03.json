@@ -1,0 +1,36 @@
+{
+  "left_combo": "a",
+  "right_combo": "nvidia",
+  "left_run_mode": "live",
+  "right_run_mode": "live",
+  "task_count": 1,
+  "left_provider_models": [
+    "gemini-flash"
+  ],
+  "right_provider_models": [
+    "nvidia-chat"
+  ],
+  "pass_rate_delta": -1.0,
+  "pass_rate_p_value": 1.0,
+  "iterations": {
+    "left_avg": 2.0,
+    "right_avg": 1.0,
+    "delta": 1.0,
+    "winner": "right",
+    "p_value": 1.0
+  },
+  "cost": {
+    "left_avg": 0.000523,
+    "right_avg": 0.0,
+    "delta": 0.000523,
+    "winner": "right",
+    "p_value": 1.0
+  },
+  "time": {
+    "left_avg": 54.887012,
+    "right_avg": 67.861231,
+    "delta": -12.974219,
+    "winner": "left",
+    "p_value": 1.0
+  }
+}

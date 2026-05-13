@@ -1,0 +1,18 @@
+{
+  "prompt": "Reply with exactly OK.",
+  "successful_count": 1,
+  "results": [
+    {
+      "combo": "nvidia",
+      "model": "nvidia-chat",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 0.0,
+      "latency_ms": 1012.3437499860302,
+      "error": null
+    }
+  ]
+}

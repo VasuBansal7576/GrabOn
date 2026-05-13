@@ -32,3 +32,29 @@ jobs:
 
       - name: Run tests
         run: pytest tests/ -v --tb=short
+
+      - name: Clone pinned httpx target
+        run: git clone --depth 1 --branch 0.28.1 https://github.com/encode/httpx target/httpx
+
+      - name: Gate retrieval regression
+        run: |
+          python -m src retrieval-eval --path target/httpx --output reports/ci_retrieval_recall.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("reports/ci_retrieval_recall.json").read_text())
+          assert report["avg_tree_recall"] > report["avg_grep_recall"]
+          assert report["tree_wins"] >= 10
+          PY
+
+      - name: Gate fixture benchmark smoke
+        run: |
+          python -m src eval --combo b --path target/httpx --limit 2 --output reports/ci_combo_b_smoke.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("reports/ci_combo_b_smoke.json").read_text())
+          assert report["pass_rate"] == "2/2"
+          PY

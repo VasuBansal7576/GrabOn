@@ -1,0 +1,35 @@
+{
+  "submission_status": "RED_PRESERVED_FAILURE_NOT_A_PASS",
+  "submission_note": "Failed live NVIDIA Mistral multi-file stress attempt kept as raw evidence. This does not count as a passing benchmark or live multi-file success.",
+  "combo": "nvidia",
+  "run_mode": "live",
+  "provider_models": [
+    "nvidia-chat"
+  ],
+  "pass_rate": "0/1",
+  "impossible_detected": false,
+  "avg_iterations": 1.0,
+  "avg_cost_usd": 0.0,
+  "avg_time_seconds": 251.58530962502118,
+  "total_cost_usd": 0.0,
+  "tasks": [
+    {
+      "task_id": "task_08_cache_transport",
+      "passed": false,
+      "impossible_correctly_detected": false,
+      "iterations_used": 1,
+      "cost_usd": 0.0,
+      "cost_breakdown": {
+        "impossible_detect": 0.0,
+        "planning": 0.0,
+        "context_ranking": 0.0,
+        "code_generation": 0.0
+      },
+      "time_seconds": 251.58530962502118,
+      "static_passed": false,
+      "tests_passed": false,
+      "review_passed": false,
+      "failure_reason": "Provider failure during code_generation: PROVIDER_ERROR: APITimeoutError: Request timed out."
+    }
+  ]
+}

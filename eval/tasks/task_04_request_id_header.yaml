@@ -1,0 +1,10 @@
+task_id: task_04_request_id_header
+description: >
+  Add a client option that injects a UUID4 request id header into outgoing
+  requests when enabled. It must not overwrite an explicit request id header
+  already provided by the caller.
+difficulty: medium
+expected_files:
+  - httpx/_client.py
+expected_behavior: "Client can inject request id headers without overwriting caller values"
+should_be_impossible: false

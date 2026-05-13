@@ -1,0 +1,32 @@
+{
+  "left_combo": "a",
+  "right_combo": "b",
+  "left_run_mode": "fixture",
+  "right_run_mode": "fixture",
+  "task_count": 12,
+  "left_provider_models": [],
+  "right_provider_models": [],
+  "pass_rate_delta": 0.0,
+  "pass_rate_p_value": null,
+  "iterations": {
+    "left_avg": 1.0,
+    "right_avg": 1.0,
+    "delta": 0.0,
+    "winner": "tie",
+    "p_value": null
+  },
+  "cost": {
+    "left_avg": 0.0,
+    "right_avg": 0.0,
+    "delta": 0.0,
+    "winner": "tie",
+    "p_value": null
+  },
+  "time": {
+    "left_avg": 2.565691,
+    "right_avg": 2.56669,
+    "delta": -0.000999,
+    "winner": "left",
+    "p_value": 0.387695
+  }
+}

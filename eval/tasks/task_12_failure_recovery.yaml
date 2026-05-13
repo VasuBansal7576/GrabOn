@@ -1,4 +1,4 @@
-task_id: task_12
+task_id: task_12_unreliable_tool_recovery
 description: >
   Add a `request_id` header to every outgoing request using a UUID4.
   The agent must use the unreliable `get_related_examples` tool to find

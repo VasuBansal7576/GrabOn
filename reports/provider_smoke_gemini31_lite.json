@@ -1,0 +1,18 @@
+{
+  "prompt": "Reply with exactly OK.",
+  "successful_count": 1,
+  "results": [
+    {
+      "combo": "a",
+      "model": "gemini-flash",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK.",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 9.000000000000001e-7,
+      "latency_ms": 2842.606457998045,
+      "error": null
+    }
+  ]
+}

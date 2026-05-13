@@ -1,0 +1,39 @@
+{
+  "submission_status": "RED_PRESERVED_FAILURE_NOT_A_PASS",
+  "submission_note": "Failed live Groq multi-file stress attempt kept as raw evidence. This does not count as a passing benchmark or live multi-file success.",
+  "combo": "groq",
+  "run_mode": "live",
+  "provider_models": [
+    "groq-llama-70b",
+    "groq-llama-8b"
+  ],
+  "pass_rate": "0/1",
+  "impossible_detected": false,
+  "avg_iterations": 5.0,
+  "avg_cost_usd": 0.00934248,
+  "avg_time_seconds": 74.63853658293374,
+  "total_cost_usd": 0.00934248,
+  "tasks": [
+    {
+      "task_id": "task_08_cache_transport",
+      "passed": false,
+      "impossible_correctly_detected": false,
+      "iterations_used": 5,
+      "cost_usd": 0.00934248,
+      "cost_breakdown": {
+        "impossible_detect": 0.00006691000000000001,
+        "planning": 0.00009566000000000002,
+        "context_ranking": 0.00017476,
+        "code_generation": 0.004953810000000001,
+        "error_parsing": 0.000019950000000000004,
+        "test_analysis": 0.00018672999999999997,
+        "refactoring": 0.0038446600000000006
+      },
+      "time_seconds": 74.63853658293374,
+      "static_passed": false,
+      "tests_passed": false,
+      "review_passed": false,
+      "failure_reason": "Exhausted 5 iterations. Last errors: ['RuntimeError: Patch failed to apply: error: patch failed: httpx/__init__.py:1\\nerror: httpx/__init__.py: patch does not apply\\nerror: dev/null: No such file or directory\\nerror: dev/null: No such file or directory', 'RuntimeError: Patch failed to apply: error: patch failed: httpx/__init__.py:0\\nerror: httpx/__init__.py: patch does not apply\\nerror: dev/null: No such file or directory\\nerror: dev/null: No such file or directory', 'RuntimeError: Patch failed to apply: error: patch failed: httpx/__init__.py:1\\nerror: httpx/__init__.py: patch does not apply\\nerror: dev/null: No such file or directory\\nerror: dev/null: No such file or directory']"
+    }
+  ]
+}

@@ -7,8 +7,9 @@ No print() statements anywhere in core logic — use this module instead.
 
 from __future__ import annotations
 
+import logging as py_logging
 import sys
-from typing import Any
+from typing import Any, cast
 
 import orjson
 import structlog
@@ -37,6 +38,7 @@ def setup_logging() -> None:
     - Production (LOG_LEVEL=INFO+): JSONL output for machine parsing.
     """
     is_dev = settings.log_level == "DEBUG"
+    log_level = getattr(py_logging, settings.log_level.upper(), py_logging.INFO)
 
     shared_processors: list[structlog.types.Processor] = [
         structlog.contextvars.merge_contextvars,
@@ -53,9 +55,7 @@ def setup_logging() -> None:
                 *shared_processors,
                 structlog.dev.ConsoleRenderer(colors=True),
             ],
-            wrapper_class=structlog.make_filtering_bound_logger(
-                structlog.get_level_from_name(settings.log_level)
-            ),
+            wrapper_class=structlog.make_filtering_bound_logger(log_level),
             context_class=dict,
             logger_factory=structlog.PrintLoggerFactory(file=sys.stderr),
             cache_logger_on_first_use=True,
@@ -68,9 +68,7 @@ def setup_logging() -> None:
                 structlog.processors.format_exc_info,
                 structlog.processors.JSONRenderer(serializer=_orjson_serializer),
             ],
-            wrapper_class=structlog.make_filtering_bound_logger(
-                structlog.get_level_from_name(settings.log_level)
-            ),
+            wrapper_class=structlog.make_filtering_bound_logger(log_level),
             context_class=dict,
             logger_factory=structlog.PrintLoggerFactory(file=sys.stderr),
             cache_logger_on_first_use=True,
@@ -79,7 +77,7 @@ def setup_logging() -> None:
 
 def get_logger(name: str) -> structlog.stdlib.BoundLogger:
     """Get a named logger bound with the module name."""
-    return structlog.get_logger(module=name)
+    return cast(structlog.stdlib.BoundLogger, structlog.get_logger(module=name))
 
 
 def log_phase(
@@ -101,7 +99,37 @@ def log_phase(
         phase,
         task_id=task_id,
         iteration=iteration,
-        data=data,
+        data=_summarize_for_log(data),
         tokens=tokens,
         cost_usd=cost_usd,
     )
+
+
+def _summarize_for_log(value: Any) -> Any:
+    """Keep JSONL useful without dumping entire source files."""
+    if isinstance(value, dict):
+        if {"task", "units", "tests", "tool_calls"}.issubset(value.keys()):
+            return {
+                "task": _truncate(value.get("task")),
+                "unit_ids": [unit.get("unit_id") for unit in value.get("units", [])[:8]],
+                "test_count": len(value.get("tests", [])),
+                "tool_call_count": len(value.get("tool_calls", [])),
+                "notes": value.get("notes", []),
+            }
+        if {"unified_diff", "task_id"}.issubset(value.keys()):
+            return {
+                **value,
+                "unified_diff": _truncate(value.get("unified_diff"), limit=1200),
+            }
+        return {key: _summarize_for_log(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_summarize_for_log(item) for item in value[:20]]
+    if isinstance(value, str):
+        return _truncate(value)
+    return value
+
+
+def _truncate(value: Any, limit: int = 500) -> Any:
+    if not isinstance(value, str) or len(value) <= limit:
+        return value
+    return value[:limit] + "...[truncated]"

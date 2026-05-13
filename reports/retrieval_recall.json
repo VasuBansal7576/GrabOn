@@ -1,0 +1,607 @@
+{
+  "codebase_path": "target/httpx",
+  "query_count": 18,
+  "avg_tree_precision": 0.5741,
+  "avg_tree_recall": 0.8444,
+  "avg_grep_precision": 0.1528,
+  "avg_grep_recall": 0.3185,
+  "tree_wins": 18,
+  "scores": [
+    {
+      "query": "How does Client send a request?",
+      "relevant_units": [
+        "httpx._client.Client._send_handling_auth",
+        "httpx._client.Client._send_handling_redirects",
+        "httpx._client.Client._send_single_request",
+        "httpx._client.Client.send"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.AsyncClient._send_single_request",
+        "httpx._client.Client._send_single_request",
+        "httpx._client.AsyncClient.send",
+        "httpx._client.Client.send",
+        "httpx._client.AsyncClient._send_handling_auth",
+        "httpx._client.AsyncClient._send_handling_redirects"
+      ],
+      "grep_units": [
+        "httpx._client.AsyncClient.send",
+        "httpx._client.Client.send",
+        "httpx._client.AsyncClient.request",
+        "httpx._client.Client.request",
+        "tests.test_timeouts.test_async_client_new_request_send_timeout",
+        "httpx._client.AsyncClient._send_single_request",
+        "httpx._client.Client._send_single_request",
+        "httpx._client.Client"
+      ],
+      "tree_precision": 0.3333,
+      "tree_recall": 0.5,
+      "grep_precision": 0.25,
+      "grep_recall": 0.5,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are request headers merged?",
+      "relevant_units": [
+        "httpx._client.BaseClient._merge_headers",
+        "httpx._client.BaseClient.build_request"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.BaseClient._merge_headers",
+        "httpx._client.BaseClient.build_request",
+        "httpx._client.BaseClient._build_request_auth",
+        "tests.client.test_headers.test_header_merge_conflicting_headers",
+        "httpx._main.format_request_headers",
+        "httpx._main.print_request_headers"
+      ],
+      "grep_units": [
+        "httpx._client.AsyncClient.request",
+        "httpx._client.Client.request",
+        "httpx._api.request",
+        "httpx._models.Request",
+        "httpx._models.Headers",
+        "httpx._client.BaseClient.headers",
+        "httpx._exceptions.HTTPError.request",
+        "httpx._models.Response.request"
+      ],
+      "tree_precision": 0.3333,
+      "tree_recall": 1.0,
+      "grep_precision": 0.0,
+      "grep_recall": 0.0,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where is timeout configuration normalized?",
+      "relevant_units": [
+        "httpx._client.BaseClient._set_timeout",
+        "httpx._config.Timeout",
+        "httpx._config.Timeout.__init__",
+        "httpx._config.Timeout.as_dict"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._config.Timeout",
+        "httpx._config.Timeout.__init__",
+        "httpx._config.Timeout.__repr__",
+        "httpx._config.Timeout.__eq__",
+        "httpx._config.Timeout.as_dict",
+        "httpx._client.BaseClient._set_timeout"
+      ],
+      "grep_units": [
+        "httpx._config.Timeout",
+        "httpx._client.BaseClient.timeout",
+        "httpx._config.Timeout.__init__",
+        "tests.client.test_properties.test_client_timeout",
+        "httpx._client.BaseClient._set_timeout",
+        "tests.test_timeouts.test_pool_timeout",
+        "tests.test_timeouts.test_async_client_new_request_send_timeout",
+        "tests.test_timeouts.test_write_timeout"
+      ],
+      "tree_precision": 0.6667,
+      "tree_recall": 1.0,
+      "grep_precision": 0.375,
+      "grep_recall": 0.75,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are response status helpers defined?",
+      "relevant_units": [
+        "httpx._models.Response.is_client_error",
+        "httpx._models.Response.is_error",
+        "httpx._models.Response.is_redirect",
+        "httpx._models.Response.is_server_error",
+        "httpx._models.Response.is_success",
+        "httpx._models.Response.raise_for_status"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._models.Response.raise_for_status",
+        "httpx._models.Response.is_success",
+        "httpx._models.Response.is_redirect",
+        "httpx._models.Response.is_client_error",
+        "httpx._models.Response.is_server_error",
+        "httpx._models.Response.is_error"
+      ],
+      "grep_units": [
+        "httpx._models.Response",
+        "httpx._models.Response.raise_for_status",
+        "tests.models.test_responses.test_raise_for_status",
+        "tests.models.test_responses.test_unknown_status_code",
+        "httpx._models.Response.__init__",
+        "httpx._main.format_response_headers",
+        "httpx._main.print_response_headers",
+        "tests.test_asgi.test_asgi_disconnect_after_response_complete"
+      ],
+      "tree_precision": 1.0,
+      "tree_recall": 1.0,
+      "grep_precision": 0.125,
+      "grep_recall": 0.1667,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are event hooks called?",
+      "relevant_units": [
+        "httpx._client.AsyncClient._send_single_request",
+        "httpx._client.BaseClient.event_hooks",
+        "httpx._client.Client._send_single_request"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.BaseClient.event_hooks",
+        "httpx._client.AsyncClient._send_single_request",
+        "httpx._client.Client._send_single_request",
+        "tests.client.test_event_hooks.test_async_event_hooks_with_redirect",
+        "tests.client.test_event_hooks.test_event_hooks_with_redirect",
+        "tests.client.test_event_hooks.test_async_event_hooks"
+      ],
+      "grep_units": [
+        "tests.client.test_event_hooks.test_async_event_hooks_with_redirect",
+        "tests.client.test_event_hooks.test_event_hooks_with_redirect",
+        "tests.client.test_event_hooks.test_async_event_hooks",
+        "tests.client.test_event_hooks.test_event_hooks",
+        "tests.client.test_event_hooks.test_async_event_hooks_raising_exception",
+        "tests.client.test_event_hooks.test_event_hooks_raising_exception",
+        "tests.client.test_properties.test_client_event_hooks",
+        "httpx._client.BaseClient.event_hooks"
+      ],
+      "tree_precision": 0.5,
+      "tree_recall": 1.0,
+      "grep_precision": 0.125,
+      "grep_recall": 0.3333,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are sync and async clients different?",
+      "relevant_units": [
+        "httpx._client.AsyncClient._send_single_request",
+        "httpx._client.AsyncClient.send",
+        "httpx._client.Client._send_single_request",
+        "httpx._client.Client.send",
+        "httpx._transports.base.AsyncBaseTransport",
+        "httpx._transports.base.BaseTransport"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.AsyncClient.send",
+        "httpx._client.AsyncClient._send_handling_auth",
+        "httpx._client.AsyncClient._send_handling_redirects",
+        "httpx._client.AsyncClient._send_single_request",
+        "httpx._client.Client.send",
+        "httpx._transports.base.AsyncBaseTransport.handle_async_request"
+      ],
+      "grep_units": [
+        "httpx._transports.asgi.ASGITransport.handle_async_request",
+        "tests.client.test_async_client.test_context_managed_transport_and_mount",
+        "httpx._client.AsyncClient._send_handling_redirects",
+        "httpx._client.AsyncClient._send_handling_auth",
+        "httpx._transports.default.AsyncHTTPTransport.handle_async_request",
+        "httpx._transports.mock.MockTransport.handle_async_request",
+        "tests.client.test_auth.ConsumeBodyTransport.handle_async_request",
+        "httpx._transports.base.AsyncBaseTransport.handle_async_request"
+      ],
+      "tree_precision": 0.5,
+      "tree_recall": 0.5,
+      "grep_precision": 0.0,
+      "grep_recall": 0.0,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where is response content read and decoded?",
+      "relevant_units": [
+        "httpx._models.Response._get_content_decoder",
+        "httpx._models.Response.aiter_bytes",
+        "httpx._models.Response.aread",
+        "httpx._models.Response.iter_bytes",
+        "httpx._models.Response.read"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._models.Response._get_content_decoder",
+        "httpx._models.Response.read",
+        "httpx._models.Response.aread",
+        "httpx._models.Response.iter_bytes",
+        "httpx._models.Response.aiter_bytes",
+        "httpx._decoders.ContentDecoder.decode"
+      ],
+      "grep_units": [
+        "httpx._models.Response.read",
+        "httpx._models.Response.content",
+        "httpx._models.Response",
+        "httpx._models.Request.read",
+        "httpx._models.Request.content",
+        "httpx._content.encode_response",
+        "tests.models.test_requests.test_aread_and_stream_data",
+        "tests.models.test_requests.test_read_and_stream_data"
+      ],
+      "tree_precision": 0.8333,
+      "tree_recall": 1.0,
+      "grep_precision": 0.125,
+      "grep_recall": 0.2,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are transport abstractions defined?",
+      "relevant_units": [
+        "httpx._transports.base.AsyncBaseTransport",
+        "httpx._transports.base.AsyncBaseTransport.handle_async_request",
+        "httpx._transports.base.BaseTransport",
+        "httpx._transports.base.BaseTransport.handle_request"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._transports.base.BaseTransport.handle_request",
+        "httpx._transports.base.BaseTransport",
+        "httpx._transports.base.AsyncBaseTransport.handle_async_request",
+        "httpx._transports.base.AsyncBaseTransport",
+        "httpx._transports.base.BaseTransport.__exit__",
+        "httpx._transports.base.BaseTransport.__enter__"
+      ],
+      "grep_units": [
+        "httpx._transports.default.AsyncHTTPTransport",
+        "httpx._transports.default.HTTPTransport",
+        "httpx._transports.asgi.ASGITransport",
+        "httpx._transports.wsgi.WSGITransport",
+        "httpx._transports.base.BaseTransport",
+        "tests.client.test_async_client.test_context_managed_transport_and_mount",
+        "tests.client.test_client.test_context_managed_transport_and_mount",
+        "tests.client.test_async_client.test_context_managed_transport"
+      ],
+      "tree_precision": 0.6667,
+      "tree_recall": 1.0,
+      "grep_precision": 0.125,
+      "grep_recall": 0.25,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are auth flows implemented?",
+      "relevant_units": [
+        "httpx._auth.Auth",
+        "httpx._auth.Auth.async_auth_flow",
+        "httpx._auth.Auth.auth_flow",
+        "httpx._auth.Auth.sync_auth_flow",
+        "httpx._auth.BasicAuth.auth_flow",
+        "httpx._auth.DigestAuth.auth_flow"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._auth.Auth.async_auth_flow",
+        "httpx._auth.Auth.auth_flow",
+        "httpx._auth.Auth.sync_auth_flow",
+        "httpx._auth.BasicAuth.auth_flow",
+        "httpx._auth.DigestAuth.auth_flow",
+        "httpx._auth.FunctionAuth.auth_flow"
+      ],
+      "grep_units": [
+        "httpx._auth.Auth",
+        "httpx._client.BaseClient.auth",
+        "httpx._auth.DigestAuth",
+        "tests.test_auth.test_digest_auth_rfc_7616_sha_256",
+        "tests.test_auth.test_digest_auth_rfc_7616_md5",
+        "tests.test_auth.test_digest_auth_rfc_2069",
+        "httpx._auth.DigestAuth._build_auth_header",
+        "tests.test_auth.test_digest_auth_with_401_nonce_counting"
+      ],
+      "tree_precision": 0.8333,
+      "tree_recall": 0.8333,
+      "grep_precision": 0.125,
+      "grep_recall": 0.1667,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are URL mutation helpers defined?",
+      "relevant_units": [
+        "httpx._urls.URL.copy_add_param",
+        "httpx._urls.URL.copy_merge_params",
+        "httpx._urls.URL.copy_remove_param",
+        "httpx._urls.URL.copy_set_param",
+        "httpx._urls.URL.copy_with"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._urls.URL.copy_set_param",
+        "httpx._urls.URL.copy_merge_params",
+        "httpx._urls.URL.copy_add_param",
+        "httpx._urls.URL.copy_remove_param",
+        "httpx._urls.URL.copy_with",
+        "httpx._urls.URL.params"
+      ],
+      "grep_units": [
+        "httpx._urls.URL",
+        "tests.conftest.TestServer.url",
+        "httpx._models.Response.url",
+        "httpx._urlparse.urlparse",
+        "httpx._utils.URLPattern",
+        "tests.models.test_url.test_url_join_rfc3986",
+        "httpx._urls.URL.__init__",
+        "tests.models.test_whatwg.test_urlparse"
+      ],
+      "tree_precision": 0.8333,
+      "tree_recall": 1.0,
+      "grep_precision": 0.0,
+      "grep_recall": 0.0,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are cookies merged onto outgoing requests?",
+      "relevant_units": [
+        "httpx._client.BaseClient._merge_cookies",
+        "httpx._models.Cookies.set_cookie_header"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.BaseClient._merge_cookies",
+        "httpx._client.BaseClient.build_request",
+        "httpx._models.Cookies.set_cookie_header",
+        "tests.client.test_cookies.test_set_per_request_cookie_is_deprecated",
+        "httpx._client.AsyncClient.request",
+        "httpx._client.Client.request"
+      ],
+      "grep_units": [
+        "httpx._models.Cookies",
+        "httpx._models.Response.cookies",
+        "httpx._client.BaseClient.cookies",
+        "httpx._client.BaseClient._merge_cookies",
+        "tests.client.test_cookies.test_setting_client_cookies_to_cookiejar",
+        "httpx._models.Cookies.__init__",
+        "tests.client.test_cookies.test_set_cookie_with_cookies_model",
+        "tests.test_auth.set_cookies"
+      ],
+      "tree_precision": 0.3333,
+      "tree_recall": 1.0,
+      "grep_precision": 0.125,
+      "grep_recall": 0.5,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are redirect requests rebuilt?",
+      "relevant_units": [
+        "httpx._client.BaseClient._build_redirect_request",
+        "httpx._client.BaseClient._redirect_headers",
+        "httpx._client.BaseClient._redirect_method",
+        "httpx._client.BaseClient._redirect_stream",
+        "httpx._client.BaseClient._redirect_url"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.BaseClient._build_redirect_request",
+        "httpx._client.BaseClient._redirect_method",
+        "httpx._client.BaseClient._redirect_headers",
+        "httpx._client.BaseClient._redirect_stream",
+        "httpx._client.BaseClient._redirect_url",
+        "httpx._api.request"
+      ],
+      "grep_units": [
+        "httpx._client.BaseClient._redirect_method",
+        "tests.client.test_redirects.test_head_redirect",
+        "tests.client.test_redirects.redirects",
+        "tests.client.test_event_hooks.test_async_event_hooks_with_redirect",
+        "tests.client.test_event_hooks.test_event_hooks_with_redirect",
+        "httpx._client.AsyncClient._send_handling_redirects",
+        "httpx._client.Client._send_handling_redirects",
+        "httpx._client.BaseClient._redirect_headers"
+      ],
+      "tree_precision": 0.8333,
+      "tree_recall": 1.0,
+      "grep_precision": 0.25,
+      "grep_recall": 0.4,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where is proxy configuration initialized?",
+      "relevant_units": [
+        "httpx._client.AsyncClient._init_proxy_transport",
+        "httpx._client.BaseClient._get_proxy_map",
+        "httpx._client.Client._init_proxy_transport",
+        "httpx._config.Proxy",
+        "httpx._config.Proxy.__init__"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._config.Proxy",
+        "httpx._exceptions.ProxyError",
+        "httpx._client.AsyncClient._init_proxy_transport",
+        "httpx._client.BaseClient._get_proxy_map",
+        "httpx._client.Client._init_proxy_transport",
+        "httpx._config.Proxy.__init__"
+      ],
+      "grep_units": [
+        "httpx._config.Proxy",
+        "tests.client.test_proxies.test_socks_proxy",
+        "httpx._client.AsyncClient._init_proxy_transport",
+        "httpx._client.Client._init_proxy_transport",
+        "httpx._client.BaseClient._get_proxy_map",
+        "tests.test_config.test_proxy_with_auth_from_url",
+        "tests.client.test_proxies.test_for_deprecated_proxy_params",
+        "tests.client.test_proxies.test_proxy_with_mounts"
+      ],
+      "tree_precision": 0.8333,
+      "tree_recall": 1.0,
+      "grep_precision": 0.5,
+      "grep_recall": 0.8,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where is response encoding determined?",
+      "relevant_units": [
+        "httpx._models.Response.charset_encoding",
+        "httpx._models.Response.encoding",
+        "httpx._models._is_known_encoding"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._content.encode_response",
+        "httpx._models.Response.charset_encoding",
+        "httpx._models.Response.encoding",
+        "tests.models.test_responses.test_response_content_type_encoding",
+        "tests.models.test_responses.test_response_default_to_utf8_encoding",
+        "tests.models.test_responses.test_response_non_text_encoding"
+      ],
+      "grep_units": [
+        "httpx._models.Response.encoding",
+        "httpx._models.Response",
+        "httpx._models.Headers.encoding",
+        "tests.models.test_responses.test_response_decode_text_using_explicit_encoding",
+        "tests.models.test_responses.test_response_force_encoding_after_text_accessed",
+        "tests.models.test_responses.test_response_fallback_to_utf8_encoding",
+        "tests.models.test_responses.test_response_content_type_encoding",
+        "tests.models.test_responses.test_response_set_explicit_encoding"
+      ],
+      "tree_precision": 0.3333,
+      "tree_recall": 0.6667,
+      "grep_precision": 0.125,
+      "grep_recall": 0.3333,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are streaming response context managers defined?",
+      "relevant_units": [
+        "httpx._api.stream",
+        "httpx._client.AsyncClient.stream",
+        "httpx._client.BoundAsyncStream",
+        "httpx._client.BoundSyncStream",
+        "httpx._client.Client.stream"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._transports.default.AsyncResponseStream",
+        "httpx._transports.default.ResponseStream",
+        "tests.models.test_responses.test_response_async_streaming_picklable",
+        "tests.models.test_responses.test_async_streaming_response",
+        "tests.models.test_responses.test_sync_streaming_response",
+        "httpx._api.stream"
+      ],
+      "grep_units": [
+        "httpx._models.Response",
+        "tests.models.test_responses.test_response_async_streaming_picklable",
+        "tests.models.test_responses.test_async_streaming_response",
+        "tests.models.test_responses.test_sync_streaming_response",
+        "tests.models.test_responses.async_streaming_body",
+        "tests.models.test_responses.StreamingBody",
+        "tests.models.test_responses.streaming_body",
+        "tests.models.test_responses.StreamingBody.__iter__"
+      ],
+      "tree_precision": 0.1667,
+      "tree_recall": 0.2,
+      "grep_precision": 0.0,
+      "grep_recall": 0.0,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where are JSON request and response helpers implemented?",
+      "relevant_units": [
+        "httpx._content.encode_json",
+        "httpx._models.Response.json"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.AsyncClient.request",
+        "httpx._client.Client.request",
+        "httpx._api.request",
+        "httpx._transports.base.BaseTransport.handle_request",
+        "httpx._models.Response.json",
+        "httpx._models.Response.request"
+      ],
+      "grep_units": [
+        "httpx._client.AsyncClient.request",
+        "httpx._client.Client.request",
+        "httpx._api.request",
+        "httpx._models.Response.json",
+        "httpx._models.Response.request",
+        "httpx._models.Response",
+        "httpx._models.Request",
+        "httpx._transports.asgi.ASGITransport.handle_async_request"
+      ],
+      "tree_precision": 0.1667,
+      "tree_recall": 0.5,
+      "grep_precision": 0.125,
+      "grep_recall": 0.5,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where is proxy transport selected for a URL?",
+      "relevant_units": [
+        "httpx._client.AsyncClient._init_proxy_transport",
+        "httpx._client.AsyncClient._transport_for_url",
+        "httpx._client.Client._init_proxy_transport",
+        "httpx._client.Client._transport_for_url"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.AsyncClient._transport_for_url",
+        "httpx._client.Client._transport_for_url",
+        "httpx._client.AsyncClient._init_proxy_transport",
+        "httpx._client.Client._init_proxy_transport",
+        "httpx._transports.base.BaseTransport.handle_request",
+        "httpx._transports.base.AsyncBaseTransport.handle_async_request"
+      ],
+      "grep_units": [
+        "httpx._client.AsyncClient._transport_for_url",
+        "httpx._client.Client._transport_for_url",
+        "httpx._config.Proxy",
+        "tests.client.test_proxies.test_transport_for_request",
+        "httpx._urls.URL",
+        "httpx._models.Response.url",
+        "tests.conftest.TestServer.url",
+        "tests.client.test_proxies.test_for_deprecated_proxy_params"
+      ],
+      "tree_precision": 0.6667,
+      "tree_recall": 1.0,
+      "grep_precision": 0.25,
+      "grep_recall": 0.5,
+      "tree_beats_grep": true
+    },
+    {
+      "query": "Where is the base URL merged into requests?",
+      "relevant_units": [
+        "httpx._client.BaseClient._merge_url",
+        "httpx._client.BaseClient.base_url",
+        "httpx._client.BaseClient.build_request"
+      ],
+      "missing_relevant_units": [],
+      "tree_units": [
+        "httpx._client.BaseClient._merge_url",
+        "httpx._client.BaseClient.build_request",
+        "httpx._client.BaseClient.base_url",
+        "httpx._client.BaseClient._merge_cookies",
+        "httpx._client.BaseClient._merge_headers",
+        "httpx._client.BaseClient._merge_queryparams"
+      ],
+      "grep_units": [
+        "httpx._urls.URL",
+        "tests.conftest.TestServer.url",
+        "httpx._models.Response.url",
+        "tests.client.test_properties.test_client_base_url_without_trailing_slash",
+        "tests.client.test_properties.test_client_base_url_with_trailing_slash",
+        "tests.client.test_properties.test_client_base_url",
+        "tests.client.test_client.test_base_url",
+        "httpx._client.BaseClient.base_url"
+      ],
+      "tree_precision": 0.5,
+      "tree_recall": 1.0,
+      "grep_precision": 0.125,
+      "grep_recall": 0.3333,
+      "tree_beats_grep": true
+    }
+  ]
+}

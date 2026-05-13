@@ -1,0 +1,29 @@
+{
+  "submission_status": "RED_PRESERVED_FAILURE_NOT_A_PASS",
+  "submission_note": "Failed older NVIDIA task-03 attempt kept as raw evidence. The green NVIDIA live coding artifact is combo_nvidia_mistral_live_task03.json.",
+  "combo": "nvidia",
+  "run_mode": "live",
+  "provider_models": [
+    "nvidia-chat"
+  ],
+  "pass_rate": "0/1",
+  "impossible_detected": false,
+  "avg_iterations": 5.0,
+  "avg_cost_usd": 0.0,
+  "avg_time_seconds": 312.18318483396433,
+  "total_cost_usd": 0.0,
+  "tasks": [
+    {
+      "task_id": "task_03_url_copy_with_tests",
+      "passed": false,
+      "impossible_correctly_detected": false,
+      "iterations_used": 5,
+      "cost_usd": 0.0,
+      "time_seconds": 312.18318483396433,
+      "static_passed": false,
+      "tests_passed": false,
+      "review_passed": false,
+      "failure_reason": "Exhausted 5 iterations. Last errors: ['RuntimeError: Patch failed to apply: error: corrupt patch at line 50', 'RuntimeError: Patch failed to apply: error: corrupt patch at line 13', 'patch contains TODO placeholder']"
+    }
+  ]
+}

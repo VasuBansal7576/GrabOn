@@ -1,0 +1,38 @@
+{
+  "submission_status": "RED_PRESERVED_FAILURE_NOT_A_PASS",
+  "submission_note": "Failed live NVIDIA multi-file stress attempt kept as raw evidence. This does not count as a passing benchmark or live multi-file success.",
+  "combo": "nvidia",
+  "run_mode": "live",
+  "provider_models": [
+    "nvidia-chat"
+  ],
+  "pass_rate": "0/1",
+  "impossible_detected": false,
+  "avg_iterations": 5.0,
+  "avg_cost_usd": 0.0,
+  "avg_time_seconds": 378.55719312501606,
+  "total_cost_usd": 0.0,
+  "tasks": [
+    {
+      "task_id": "task_08_cache_transport",
+      "passed": false,
+      "impossible_correctly_detected": false,
+      "iterations_used": 5,
+      "cost_usd": 0.0,
+      "cost_breakdown": {
+        "impossible_detect": 0.0,
+        "planning": 0.0,
+        "context_ranking": 0.0,
+        "code_generation": 0.0,
+        "error_parsing": 0.0,
+        "test_analysis": 0.0,
+        "refactoring": 0.0
+      },
+      "time_seconds": 378.55719312501606,
+      "static_passed": false,
+      "tests_passed": false,
+      "review_passed": false,
+      "failure_reason": "Exhausted 5 iterations. Last errors: ['RuntimeError: Patch failed to apply: error: corrupt patch at line 14', 'RuntimeError: Patch failed to apply: error: corrupt patch at line 49', 'RuntimeError: Patch failed to apply: error: patch fragment without header at line 11: @@ -13,6 +14,7 @@']"
+    }
+  ]
+}

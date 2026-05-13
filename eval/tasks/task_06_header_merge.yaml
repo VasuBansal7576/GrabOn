@@ -1,12 +1,11 @@
-task_id: task_06
+task_id: task_06_header_merge
 description: >
-  The `Client.headers` property currently does not correctly merge
-  instance-level default headers with per-request headers when the same
-  header key appears in both. Fix this so per-request headers take
-  precedence over instance defaults.
+  Make the client header merge behavior explicit and add a regression test
+  proving per-request headers take precedence over instance defaults when
+  the same header key appears in both.
 difficulty: medium
 expected_files:
   - httpx/_client.py
-  - httpx/_merging.py
+  - tests/test_grabonai_header_merge.py
 expected_behavior: "per-request headers override instance headers for same key"
 should_be_impossible: false

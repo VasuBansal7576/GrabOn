@@ -1,0 +1,30 @@
+{
+  "prompt": "Reply with exactly OK.",
+  "successful_count": 2,
+  "results": [
+    {
+      "combo": "a",
+      "model": "gemini-flash",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 9.000000000000001e-7,
+      "latency_ms": 5287.4833340756595,
+      "error": null
+    },
+    {
+      "combo": "nvidia",
+      "model": "nvidia-chat",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK.",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 0.0,
+      "latency_ms": 16087.3218330089,
+      "error": null
+    }
+  ]
+}

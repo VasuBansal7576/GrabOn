@@ -1,0 +1,18 @@
+{
+  "prompt": "Reply with exactly OK.",
+  "successful_count": 0,
+  "results": [
+    {
+      "combo": "nvidia",
+      "model": "nvidia-chat",
+      "status": "error",
+      "provider_available": true,
+      "content_preview": "",
+      "input_tokens": 5,
+      "output_tokens": 6,
+      "cost_usd": 0.0,
+      "latency_ms": 60588.662291062064,
+      "error": "PROVIDER_ERROR: APITimeoutError: Request timed out."
+    }
+  ]
+}

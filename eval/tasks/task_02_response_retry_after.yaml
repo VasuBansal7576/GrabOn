@@ -1,0 +1,10 @@
+task_id: task_02_response_retry_after
+description: >
+  Add a `retry_after` property to the `Response` class that parses the
+  Retry-After header as seconds when possible and returns None when absent
+  or invalid.
+difficulty: easy
+expected_files:
+  - httpx/_models.py
+expected_behavior: "response.retry_after returns seconds or None"
+should_be_impossible: false

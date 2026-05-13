@@ -20,10 +20,9 @@ from __future__ import annotations
 import asyncio
 import random
 import time
-from collections.abc import Awaitable, Callable
+from collections.abc import Callable
+from dataclasses import dataclass
 from typing import Any
-
-from pydantic import BaseModel
 
 from src.logging import get_logger
 from src.schemas import ToolSchema
@@ -47,14 +46,12 @@ class ToolUnreliableError(ToolError):
     """Raised when an unreliable tool simulates a failure (30% failure rate)."""
 
 
-class RegisteredTool(BaseModel):
+@dataclass(slots=True)
+class RegisteredTool:
     """A tool registered in the registry with metadata."""
 
     schema: ToolSchema
     _execute_fn: Callable[..., Any] | None = None
-
-    class Config:
-        arbitrary_types_allowed = True
 
 
 class ToolRegistry:
@@ -133,12 +130,13 @@ class ToolRegistry:
         start = time.monotonic()
         try:
             if asyncio.iscoroutinefunction(executor):
-                result = await asyncio.wait_for(
-                    executor(**kwargs), timeout=schema.timeout_seconds
-                )
+                result = await asyncio.wait_for(executor(**kwargs), timeout=schema.timeout_seconds)
             else:
-                result = executor(**kwargs)
-        except asyncio.TimeoutError:
+                result = await asyncio.wait_for(
+                    asyncio.to_thread(executor, **kwargs),
+                    timeout=schema.timeout_seconds,
+                )
+        except TimeoutError as exc:
             elapsed = time.monotonic() - start
             logger.error(
                 "tool_timeout",
@@ -148,7 +146,7 @@ class ToolRegistry:
             )
             raise ToolTimeoutError(
                 f"Tool '{name}' timed out after {schema.timeout_seconds}s"
-            )
+            ) from exc
 
         elapsed = time.monotonic() - start
         logger.info(

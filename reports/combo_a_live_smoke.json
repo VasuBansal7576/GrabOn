@@ -1,0 +1,27 @@
+{
+  "combo": "a",
+  "run_mode": "live",
+  "provider_models": [
+    "gemini-flash"
+  ],
+  "pass_rate": "1/1",
+  "impossible_detected": false,
+  "avg_iterations": 1.0,
+  "avg_cost_usd": 0.0021109,
+  "avg_time_seconds": 17.279608957935125,
+  "total_cost_usd": 0.0021109,
+  "tasks": [
+    {
+      "task_id": "task_01_request_timeout_seconds",
+      "passed": true,
+      "impossible_correctly_detected": false,
+      "iterations_used": 1,
+      "cost_usd": 0.0021109,
+      "time_seconds": 17.279608957935125,
+      "static_passed": true,
+      "tests_passed": true,
+      "review_passed": true,
+      "failure_reason": null
+    }
+  ]
+}

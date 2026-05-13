@@ -1,0 +1,37 @@
+{
+  "left_combo": "nvidia",
+  "right_combo": "groq",
+  "left_run_mode": "live",
+  "right_run_mode": "live",
+  "task_count": 1,
+  "left_provider_models": [
+    "nvidia-chat"
+  ],
+  "right_provider_models": [
+    "groq-llama-70b",
+    "groq-llama-8b"
+  ],
+  "pass_rate_delta": 0.0,
+  "pass_rate_p_value": null,
+  "iterations": {
+    "left_avg": 1.0,
+    "right_avg": 1.0,
+    "delta": 0.0,
+    "winner": "tie",
+    "p_value": null
+  },
+  "cost": {
+    "left_avg": 0.0,
+    "right_avg": 0.000974,
+    "delta": -0.000974,
+    "winner": "left",
+    "p_value": 1.0
+  },
+  "time": {
+    "left_avg": 67.861231,
+    "right_avg": 6.465667,
+    "delta": 61.395563,
+    "winner": "right",
+    "p_value": 1.0
+  }
+}

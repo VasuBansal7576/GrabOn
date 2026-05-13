@@ -1,10 +1,10 @@
-task_id: task_03
+task_id: task_03_url_copy_with_tests
 description: >
   Write pytest tests for the existing `URL.copy_with()` method.
   Cover: changing scheme, changing host, changing path, changing query params,
   and combining multiple changes at once.
 difficulty: easy
 expected_files:
-  - tests/test_url.py
+  - tests/test_grabonai_url_copy_with.py
 expected_behavior: "All new tests pass with existing httpx code unchanged"
 should_be_impossible: false

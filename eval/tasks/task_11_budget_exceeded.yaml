@@ -1,4 +1,5 @@
-task_id: task_11
+task_id: task_11_budget_ceiling
+budget_usd: 0.02
 description: >
   Add a `max_response_size` parameter to `Client.__init__` that limits the
   maximum response body size in bytes. If exceeded, raise a

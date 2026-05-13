@@ -1,4 +1,4 @@
-task_id: task_09
+task_id: task_09_raise_on_status_flags
 description: >
   Add `raise_on_4xx` and `raise_on_5xx` parameters to `Client.__init__`
   that automatically raise `HTTPStatusError` for 4xx and 5xx responses

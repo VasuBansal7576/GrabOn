@@ -1,6 +1,75 @@
 # AGENTS.md — GrabOn AI Labs | The Coder
 # Codex Execution Instructions
 
+## Current Mode
+
+The repo is in **implementation-complete mode**. The user approved the plan and
+asked for the whole build. Future changes should preserve the vertical-slice
+shape in `IMPLEMENTATION_PLAN.md`, keep raw benchmark numbers honest, and avoid
+rewriting unrelated docs or generated artifacts.
+
+## Agent Skills
+
+These are process rules adapted from Matt Pocock's engineering skills and the
+planning lenses chosen for this project.
+
+### Issue Tracker
+Local Markdown issues live in `docs/issues/` until the user asks to publish
+GitHub Issues. See `docs/agents/issue-tracker.md`.
+
+### Triage Labels
+Use the canonical label vocabulary in `docs/agents/triage-labels.md`.
+
+### Domain Docs
+This is a single-context repo. Read `CONTEXT.md` before changing planning docs
+or implementation modules. ADRs live in `docs/adr/`. See
+`docs/agents/domain.md`.
+
+### Grill Me / Grill With Docs
+Before major implementation, walk the design tree. If a question can be
+answered by repo exploration, answer it from the repo instead of asking the
+user. Record durable domain terms in `CONTEXT.md` and hard-to-reverse tradeoffs
+as ADRs.
+
+### To PRD
+Use `PRD.md` as the product requirement source. It should describe behavior,
+user stories, implementation decisions, testing decisions, out of scope, and
+further notes. Do not put stale code snippets or file paths in the PRD unless
+they encode a decision more precisely than prose.
+
+### To Issues
+Break work into tracer-bullet vertical slices. Each slice must cut through the
+needed layers and be independently verifiable. Prefer many thin slices over one
+large horizontal phase.
+
+### TDD
+Implementation slices use red-green-refactor: one failing behavior test, minimal
+code to pass, then refactor while green. Tests should verify public behavior
+through module interfaces, not private implementation shape.
+
+### Improve Codebase Architecture
+Prefer deep modules: small stable interfaces hiding meaningful implementation.
+Use the deletion test: if deleting a module only moves trivial pass-through code,
+it is too shallow.
+
+### First Principles
+Every planned module must map to one Assignment 05 requirement: retrieval,
+generation, verification, iteration, cost tracking, task queue, or eval.
+
+### Premortem
+Before coding, check `PREMORTEM.md`. A high-risk rejection reason must either be
+closed by the plan or explicitly accepted as remaining risk.
+
+### Steelman
+Before defending tree-first retrieval, read `STEELMAN.md` and
+`docs/adr/0001-tree-first-retrieval.md`. The plan must be able to answer why it
+does not start with vector DB despite the PDF wording.
+
+### Red Team
+Before final submission, run the checks in `RED_TEAM.md`. Do not mark the plan
+submission-ready while setup, retrieval, verification, benchmark, or README
+red-team checks are unresolved.
+
 ## What You Are Building
 A coding agent that takes a natural-language task, retrieves relevant context
 from the httpx codebase using a tree-index (no vector DB, no embeddings),

@@ -1,0 +1,71 @@
+{
+  "prompt": "Reply with exactly OK.",
+  "successful_count": 5,
+  "results": [
+    {
+      "combo": "nvidia",
+      "stage": "planning",
+      "model": "nvidia-chat",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 0.0,
+      "latency_ms": 8890.633167000487,
+      "error": null
+    },
+    {
+      "combo": "nvidia",
+      "stage": "context_ranking",
+      "model": "nvidia-chat",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 0.0,
+      "latency_ms": 9721.864041988738,
+      "error": null
+    },
+    {
+      "combo": "nvidia",
+      "stage": "error_parsing",
+      "model": "nvidia-chat",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 0.0,
+      "latency_ms": 9729.215458035469,
+      "error": null
+    },
+    {
+      "combo": "nvidia",
+      "stage": "test_analysis",
+      "model": "nvidia-chat",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 0.0,
+      "latency_ms": 6890.482834074646,
+      "error": null
+    },
+    {
+      "combo": "nvidia",
+      "stage": "llm_review",
+      "model": "nvidia-chat",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 0.0,
+      "latency_ms": 2030.7233330095187,
+      "error": null
+    }
+  ]
+}

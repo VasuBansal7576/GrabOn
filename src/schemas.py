@@ -7,17 +7,16 @@ No raw dicts passed between phases — Pydantic models only (Critical Rule 7).
 from __future__ import annotations
 
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel, Field
-
 
 # ---------------------------------------------------------------------------
 # Enums
 # ---------------------------------------------------------------------------
 
-class TaskStatus(str, Enum):
+class TaskStatus(StrEnum):
     """Status of a task in the queue."""
     QUEUED = "queued"
     RUNNING = "running"
@@ -26,10 +25,11 @@ class TaskStatus(str, Enum):
     IMPOSSIBLE = "impossible"
 
 
-class Stage(str, Enum):
+class Stage(StrEnum):
     """Agent pipeline stages for model routing and cost tracking."""
     CONTEXT_RANKING = "context_ranking"
     ERROR_PARSING = "error_parsing"
+    TEST_ANALYSIS = "test_analysis"
     CODE_GENERATION = "code_generation"
     REFACTORING = "refactoring"
     LLM_REVIEW = "llm_review"
@@ -37,7 +37,7 @@ class Stage(str, Enum):
     PLANNING = "planning"
 
 
-class DecisionType(str, Enum):
+class DecisionType(StrEnum):
     """Decision outcomes from the DECIDE phase."""
     DONE = "done"
     RETRY = "retry"
@@ -46,7 +46,7 @@ class DecisionType(str, Enum):
     EXHAUSTED = "exhausted"
 
 
-class Difficulty(str, Enum):
+class Difficulty(StrEnum):
     """Task difficulty levels."""
     EASY = "easy"
     MEDIUM = "medium"
@@ -83,12 +83,51 @@ class ModuleNode(BaseModel):
     functions: list[str] = Field(default_factory=list, description="Function unit_ids")
 
 
+class DocChunk(BaseModel):
+    """A chunked documentation snippet for README/docs retrieval."""
+    chunk_id: str
+    file_path: str
+    heading: str
+    content: str
+
+
+class CodeChunk(BaseModel):
+    """A chunked code snippet with a local code-semantic embedding."""
+    chunk_id: str
+    unit_id: str
+    file_path: str
+    symbol: str
+    unit_type: str
+    content: str
+    embedding: dict[str, float] = Field(default_factory=dict)
+    embedding_model: str = "local-code-semantic-v1"
+
+
 class TreeIndex(BaseModel):
     """Hierarchical codebase index built from tree-sitter AST."""
     modules: dict[str, ModuleNode] = Field(description="file_path → ModuleNode")
     units: dict[str, ParsedUnit] = Field(description="unit_id → ParsedUnit")
     import_graph: dict[str, list[str]] = Field(description="unit_id → list of imported unit_ids")
-    test_map: dict[str, str] = Field(description="unit_id → test_file_path")
+    test_map: dict[str, list[str]] = Field(
+        default_factory=dict,
+        description="unit_id → test file paths or pytest node ids",
+    )
+    doc_chunks: list[DocChunk] = Field(default_factory=list, description="README/docs chunks")
+    code_chunks: list[CodeChunk] = Field(
+        default_factory=list,
+        description="Chunked code snippets for hybrid vector-style fallback retrieval",
+    )
+    vector_store_path: str | None = Field(
+        default=None,
+        description="Path to the persisted SQLite vector store for code chunks",
+    )
+    vector_store_kind: str = Field(
+        default="sqlite-vector-db",
+        description="Local vector database backend used for code chunk retrieval",
+    )
+    codebase_path: str | None = None
+    source_hash: str | None = None
+    built_at: datetime = Field(default_factory=datetime.now)
 
 
 # ---------------------------------------------------------------------------
@@ -136,6 +175,8 @@ class ImportResult(BaseModel):
 
 class TestResult(BaseModel):
     """Result of get_tests_for tool."""
+    __test__ = False
+
     unit_id: str
     test_file: str | None = None
     test_functions: list[str] = Field(default_factory=list)
@@ -146,6 +187,26 @@ class ExampleResult(BaseModel):
     """Result of get_related_examples tool (unreliable, fails 30% of the time)."""
     query: str
     examples: list[str] = Field(default_factory=list)
+
+
+class ToolCallRecord(BaseModel):
+    """Trace for one retrieval tool call."""
+    tool_name: str
+    arguments: dict[str, Any] = Field(default_factory=dict)
+    success: bool
+    latency_ms: float = 0.0
+    error: str | None = None
+
+
+class RetrievalContext(BaseModel):
+    """Context assembled for generation."""
+    task: str
+    units: list[ParsedUnit] = Field(default_factory=list)
+    tests: list[TestResult] = Field(default_factory=list)
+    docs: list[DocChunk] = Field(default_factory=list)
+    examples: list[str] = Field(default_factory=list)
+    tool_calls: list[ToolCallRecord] = Field(default_factory=list)
+    notes: list[str] = Field(default_factory=list)
 
 
 # ---------------------------------------------------------------------------
@@ -161,7 +222,7 @@ class LintError(BaseModel):
     message: str
 
 
-class TypeError_(BaseModel):
+class MypyError(BaseModel):
     """A single mypy type error (underscore to avoid shadowing builtins)."""
     file: str
     line: int
@@ -173,7 +234,7 @@ class StaticAnalysisResult(BaseModel):
     """Result of ruff + mypy static analysis."""
     passed: bool
     ruff_errors: list[LintError] = Field(default_factory=list)
-    mypy_errors: list[TypeError_] = Field(default_factory=list)
+    mypy_errors: list[MypyError] = Field(default_factory=list)
     error_count: int = 0
 
 
@@ -216,6 +277,15 @@ class VerificationResult(BaseModel):
         ])
 
 
+class GeneratedPatch(BaseModel):
+    """A patch produced by the generator."""
+    task_id: str
+    unified_diff: str = ""
+    explanation: str = ""
+    model: str = "offline-template"
+    applies_cleanly: bool | None = None
+
+
 # ---------------------------------------------------------------------------
 # Agent Loop Models
 # ---------------------------------------------------------------------------
@@ -248,7 +318,11 @@ class TaskResult(BaseModel):
     """Final result of an agent run."""
     task_id: str
     status: TaskStatus
+    run_mode: str = "fixture"
     generated_code: str | None = None
+    patch: GeneratedPatch | None = None
+    plan: Plan | None = None
+    retrieval: RetrievalContext | None = None
     iterations_used: int = 0
     verification: VerificationResult | None = None
     cost_breakdown: dict[str, float] = Field(default_factory=dict)
@@ -266,7 +340,7 @@ class TaskResult(BaseModel):
             generated_code=code,
             iterations_used=iterations,
             cost_breakdown=cost,
-            total_cost_usd=sum(cost.values()),
+            total_cost_usd=round(sum(cost.values()), 6),
             time_seconds=time_s,
         )
 
@@ -311,6 +385,17 @@ class CostBreakdown(BaseModel):
     total_cost_usd: float = 0.0
 
 
+class LLMResponse(BaseModel):
+    """Structured model response used by generator/router/reviewer."""
+    content: str
+    model: str
+    stage: Stage
+    input_tokens: int = 0
+    output_tokens: int = 0
+    cost_usd: float = 0.0
+    latency_ms: float = 0.0
+
+
 # ---------------------------------------------------------------------------
 # Tool Registry Models
 # ---------------------------------------------------------------------------
@@ -339,6 +424,7 @@ class TaskDefinition(BaseModel):
     should_be_impossible: bool = False
     is_budget_exceeded: bool = False
     tests_failure_recovery: bool = False
+    budget_usd: float | None = None
 
 
 class TaskScore(BaseModel):
@@ -348,6 +434,7 @@ class TaskScore(BaseModel):
     impossible_correctly_detected: bool = False
     iterations_used: int = 0
     cost_usd: float = 0.0
+    cost_breakdown: dict[str, float] = Field(default_factory=dict)
     time_seconds: float = 0.0
     static_passed: bool = False
     tests_passed: bool = False
@@ -358,6 +445,8 @@ class TaskScore(BaseModel):
 class BenchmarkReport(BaseModel):
     """Aggregate benchmark report."""
     combo: str
+    run_mode: str = "fixture"
+    provider_models: list[str] = Field(default_factory=list)
     pass_rate: str
     impossible_detected: bool = False
     avg_iterations: float = 0.0
@@ -365,3 +454,82 @@ class BenchmarkReport(BaseModel):
     avg_time_seconds: float = 0.0
     total_cost_usd: float = 0.0
     tasks: list[TaskScore] = Field(default_factory=list)
+
+
+class ComparisonMetric(BaseModel):
+    """Paired comparison summary for one benchmark metric."""
+    left_avg: float
+    right_avg: float
+    delta: float
+    winner: str
+    p_value: float | None = None
+
+
+class BenchmarkComparison(BaseModel):
+    """Paired comparison between two benchmark reports."""
+    left_combo: str
+    right_combo: str
+    left_run_mode: str
+    right_run_mode: str
+    task_count: int
+    left_provider_models: list[str] = Field(default_factory=list)
+    right_provider_models: list[str] = Field(default_factory=list)
+    pass_rate_delta: float
+    pass_rate_p_value: float | None = None
+    iterations: ComparisonMetric
+    cost: ComparisonMetric
+    time: ComparisonMetric
+
+
+class ProviderSmokeResult(BaseModel):
+    """One live-provider smoke result."""
+    combo: str
+    stage: Stage = Stage.PLANNING
+    model: str
+    status: str
+    provider_available: bool
+    content_preview: str = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
+    cost_usd: float = 0.0
+    latency_ms: float = 0.0
+    error: str | None = None
+
+
+class ProviderSmokeReport(BaseModel):
+    """Live-provider smoke report suitable for raw submission evidence."""
+    prompt: str
+    successful_count: int = 0
+    results: list[ProviderSmokeResult] = Field(default_factory=list)
+
+
+class RetrievalEvalQuery(BaseModel):
+    """One manually labeled retrieval recall query."""
+    query: str
+    relevant_units: list[str]
+
+
+class RetrievalEvalScore(BaseModel):
+    """Tree retrieval vs lexical baseline score for one query."""
+    query: str
+    relevant_units: list[str]
+    missing_relevant_units: list[str] = Field(default_factory=list)
+    tree_units: list[str]
+    grep_units: list[str]
+    tree_precision: float
+    tree_recall: float
+    grep_precision: float
+    grep_recall: float
+    tree_beats_grep: bool
+
+
+class RetrievalEvalReport(BaseModel):
+    """Aggregate retrieval recall report."""
+    codebase_path: str
+    query_count: int
+    avg_tree_precision: float
+    avg_tree_recall: float
+    avg_grep_precision: float
+    avg_grep_recall: float
+    tree_wins: int
+    scores: list[RetrievalEvalScore]

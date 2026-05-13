@@ -1,0 +1,71 @@
+{
+  "prompt": "Reply with exactly OK.",
+  "successful_count": 5,
+  "results": [
+    {
+      "combo": "groq",
+      "stage": "planning",
+      "model": "groq-llama-70b",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 3.74e-6,
+      "latency_ms": 5113.092791987583,
+      "error": null
+    },
+    {
+      "combo": "groq",
+      "stage": "context_ranking",
+      "model": "groq-llama-8b",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK.",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 3.3e-7,
+      "latency_ms": 171.02970799896866,
+      "error": null
+    },
+    {
+      "combo": "groq",
+      "stage": "error_parsing",
+      "model": "groq-llama-8b",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK.",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 3.3e-7,
+      "latency_ms": 23360.588915995322,
+      "error": null
+    },
+    {
+      "combo": "groq",
+      "stage": "test_analysis",
+      "model": "groq-llama-70b",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 3.74e-6,
+      "latency_ms": 279.34854093473405,
+      "error": null
+    },
+    {
+      "combo": "groq",
+      "stage": "llm_review",
+      "model": "groq-llama-8b",
+      "status": "ok",
+      "provider_available": true,
+      "content_preview": "OK",
+      "input_tokens": 5,
+      "output_tokens": 1,
+      "cost_usd": 3.3e-7,
+      "latency_ms": 170.26995902415365,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+task_id: task_07_max_response_size
+description: >
+  Add a max_response_size client option and a dedicated exception when response
+  body size exceeds the configured limit.
+difficulty: hard
+expected_files:
+  - httpx/_client.py
+  - httpx/_exceptions.py
+expected_behavior: "Responses larger than max_response_size raise ResponseTooLargeError"
+should_be_impossible: false

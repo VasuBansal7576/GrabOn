@@ -1,4 +1,4 @@
-task_id: task_10
+task_id: task_10_remove_async_transport
 description: >
   Make all httpx requests synchronous by removing the async transport layer
   entirely. All methods currently using async/await should become regular

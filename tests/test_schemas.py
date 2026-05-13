@@ -3,11 +3,9 @@
 from __future__ import annotations
 
 from src.schemas import (
-    DecisionType,
-    Difficulty,
     Stage,
-    TaskStatus,
     TaskResult,
+    TaskStatus,
 )
 
 
