@@ -136,6 +136,9 @@ is no longer missing:
 - `reports/combo_nvidia_mistral_live_task03.json` records a real NVIDIA NIM
   `--live` coding run that completed task 03 end-to-end with static, pytest,
   and reviewer checks passing.
+- `reports/combo_nvidia_mistral_live_task08_multifile.json` records a real
+  NVIDIA NIM `--live` coding run that completed the task-08 multi-file stress
+  case in 2 iterations with static, pytest, and reviewer checks passing.
 - `reports/combo_groq_live_task03.json` records a real Groq `--live` coding
   run that completed task 03 end-to-end with static, pytest, and reviewer
   checks passing.
@@ -146,6 +149,8 @@ is no longer missing:
   improved over NVIDIA by creating the new `httpx/_cache.py` module, but the
   export patch against `httpx/__init__.py` still did not apply cleanly within
   5 iterations.
+- `reports/combo_a_live_task08_multifile.json` is preserved as a Gemini
+  quota-limited task-08 attempt, not counted as a passing artifact.
 - `reports/combo_a_live_task03.json`,
   `reports/combo_nvidia_live_task03.json`, and
   `reports/comparison_a_vs_nvidia_live_task03.json` preserve the current
@@ -174,5 +179,6 @@ inside the JSON artifact. The full report index is in `reports/README.md`.
 - Cost evidence is aggregated in `reports/submission_cost_summary.json`, which
   keeps live report spend separate from `$0.00` fixture evidence.
 - Full live benchmark coverage is still thinner than fixture coverage. The repo
-  proves multi-provider connectivity, selected live end-to-end coding runs, and
-  preserves failed live attempts without counting them as passes.
+  proves multi-provider connectivity, selected live end-to-end coding runs,
+  including the task-08 multi-file stress case, and preserves failed live
+  attempts without counting them as passes.

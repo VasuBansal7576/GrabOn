@@ -31,6 +31,7 @@ from src.schemas import (
     TestResult,
 )
 from src.verification.reviewer import review_patch
+from src.verification.test_runner import _apply_patch
 
 
 def test_registry_register_and_list() -> None:
@@ -370,6 +371,57 @@ def test_test_only_live_diff_falls_back_to_raw_response_tests() -> None:
 
     assert "+++ b/tests/test_url_copy_with.py" in normalized
     assert "+def test_url_copy_with_scheme():" in normalized
+
+
+def test_cache_transport_live_diff_is_stabilized_for_multifile_apply(tmp_path: Path) -> None:
+    package = tmp_path / "httpx"
+    package.mkdir()
+    (tmp_path / "tests").mkdir()
+    (package / "__init__.py").write_text(
+        "from ._auth import *\n\n"
+        "__all__ = [\n"
+        '    "ByteStream",\n'
+        '    "Client",\n'
+        "]\n",
+        encoding="utf-8",
+    )
+    task = Task(
+        task_id="task_08_cache_transport",
+        description="Implement a CacheTransport class with Cache-Control handling.",
+    )
+    malformed_live_diff = (
+        "diff --git a/httpx/_models.py b/httpx/_models.py\n"
+        "--- a/httpx/_models.py\n"
+        "+++ b/httpx/_models.py\n"
+        "@@ -0,0 +1,2 @@\n"
+        "+from ._cache import CacheTransport\n"
+        "diff --git a/dev/null b/httpx/_cache.py\n"
+        "--- dev/null\n"
+        "+++ b/httpx/_cache.py\n"
+        "@@ -0,0 +1,2 @@\n"
+        "+class CacheTransport:\n"
+        "+    pass\n"
+        "diff --git a/httpx/__init__.py b/httpx/__init__.py\n"
+        "--- a/httpx/__init__.py\n"
+        "+++ b/httpx/__init__.py\n"
+        "@@ -0,0 +1,2 @@\n"
+        "+from ._cache import *\n"
+        "+    \"CacheTransport\",\n"
+    )
+
+    normalized = _normalize_generated_diff(
+        task,
+        malformed_live_diff,
+        malformed_live_diff,
+        tmp_path,
+    )
+    _apply_patch(tmp_path, normalized)
+
+    assert "+++ b/httpx/_models.py" not in normalized
+    assert "from ._cache import *" in (package / "__init__.py").read_text(encoding="utf-8")
+    assert '"CacheTransport"' in (package / "__init__.py").read_text(encoding="utf-8")
+    assert "class CacheTransport" in (package / "_cache.py").read_text(encoding="utf-8")
+    assert (tmp_path / "tests" / "test_grabonai_cache_transport.py").exists()
 
 
 def test_refactor_keeps_original_patch_when_provider_fails() -> None:

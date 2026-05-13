@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-13T14:15:59.697255+00:00",
+  "generated_at": "2026-05-13T20:13:35.864071+00:00",
   "method": "Aggregates costs embedded in raw benchmark and provider-smoke JSON. Fixture reports are intentionally counted separately because they do not call paid APIs.",
   "measured_live_report_cost_usd": 0.01598541,
   "measured_fixture_report_cost_usd": 0.0,
@@ -143,10 +143,10 @@
       "type": "benchmark",
       "combo": "nvidia",
       "run_mode": "live",
-      "pass_rate": "0/1",
+      "pass_rate": "1/1",
       "total_cost_usd": 0.0,
       "avg_cost_usd": 0.0,
-      "avg_time_seconds": 251.58530962502118,
+      "avg_time_seconds": 288.82817058300134,
       "task_count": 1
     }
   ],

@@ -145,6 +145,7 @@ class AgentLoop:
                     context=retrieval,
                     patch=patch,
                     prior_errors=prior_errors,
+                    codebase_path=self.codebase_path,
                 )
                 last_patch = patch
                 log_phase(

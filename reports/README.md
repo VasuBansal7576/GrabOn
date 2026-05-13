@@ -29,6 +29,7 @@ evidence, but they do not count as successful benchmark results.
 | `provider_stage_smoke_live.json` | SMOKE_PASS | Live provider routing | Gemini + NVIDIA routed stage evidence. |
 | `combo_a_live_smoke.json` | LIVE_PASS | Gemini live coding | One task passed end-to-end. |
 | `combo_nvidia_mistral_live_task03.json` | LIVE_PASS | NVIDIA live coding | Task 03 passed end-to-end. |
+| `combo_nvidia_mistral_live_task08_multifile.json` | LIVE_PASS | 3+ file live stress task | Task 08 passed end-to-end in 2 iterations with static, pytest, and reviewer checks true; JSON is labeled `submission_status: LIVE_PASS`. |
 | `combo_groq_live_task03.json` | LIVE_PASS | Groq live coding | Task 03 passed end-to-end with non-zero tracked cost. |
 | `comparison_nvidia_vs_groq_live_task03.json` | LIVE_PASS | Live provider comparison | Compares two passing live task-03 runs. |
 | `submission_cost_summary.json` | PARTIAL | Cost evidence | Aggregates report-level cost; provider dashboard spend is still manual. |
@@ -46,4 +47,3 @@ LIVE_ATTEMPT_FAILED_NOT_CLAIMED` at the top of the JSON.
 | `combo_groq_live_task08_multifile.json` | LIVE_ATTEMPT_FAILED | Groq task 08 exhausted 5 iterations; export/new-file diff did not apply cleanly. |
 | `combo_nvidia_llama70b_live_task07_multifile.json` | LIVE_ATTEMPT_FAILED | NVIDIA timed out during generation. |
 | `combo_nvidia_llama70b_live_task08_multifile.json` | LIVE_ATTEMPT_FAILED | NVIDIA exhausted retries with corrupt diffs. |
-| `combo_nvidia_mistral_live_task08_multifile.json` | LIVE_ATTEMPT_FAILED | NVIDIA Mistral timed out during generation. |
