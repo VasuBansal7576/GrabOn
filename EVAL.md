@@ -99,10 +99,10 @@ uv run python -m src compare-eval \
   --output reports/comparison_nvidia_vs_groq_live_task03.json
 ```
 
-The older live comparison is intentionally red, not hidden: Gemini hit
+The older live comparison is intentionally kept as raw evidence: Gemini hit
 free-tier quota on retry, while an earlier NVIDIA model returned malformed
-diffs through all 5 iterations. The newer NVIDIA Mistral task-03 artifact is
-green, but the Gemini side of the same-task comparison is still the older red
+diffs through all 5 iterations. The newer NVIDIA Mistral task-03 artifact
+passed, but the Gemini side of the same-task comparison is still the older
 quota-limited run.
 
 ## Retrieval Recall Suite
@@ -140,9 +140,9 @@ is no longer missing:
   run that completed task 03 end-to-end with static, pytest, and reviewer
   checks passing.
 - `reports/combo_nvidia_llama70b_live_task07_multifile.json` and
-  `reports/combo_nvidia_llama70b_live_task08_multifile.json` are preserved red
-  multi-file attempts.
-- `reports/combo_groq_live_task08_multifile.json` is also preserved red. Groq
+  `reports/combo_nvidia_llama70b_live_task08_multifile.json` are preserved
+  multi-file attempts that did not pass.
+- `reports/combo_groq_live_task08_multifile.json` is also preserved. Groq
   improved over NVIDIA by creating the new `httpx/_cache.py` module, but the
   export patch against `httpx/__init__.py` still did not apply cleanly within
   5 iterations.
@@ -155,15 +155,15 @@ is no longer missing:
 
 Reports use the following submission labels:
 
-- `GREEN FIXTURE`: deterministic offline benchmark evidence. Useful for
+- `FIXTURE_PASS`: deterministic offline benchmark evidence. Useful for
   reproducibility, but not live model proof.
-- `GREEN LIVE`: a real provider completed the coding task end-to-end.
-- `GREEN SMOKE`: a real provider answered the routed stage, but did not perform
+- `LIVE_PASS`: a real provider completed the coding task end-to-end.
+- `SMOKE_PASS`: a real provider answered the routed stage, but did not perform
   a full coding task.
-- `RED_PRESERVED_FAILURE_NOT_A_PASS`: a failed live run kept for honesty. It is
+- `LIVE_ATTEMPT_FAILED_NOT_CLAIMED`: a failed live run kept for honesty. It is
   not counted as a benchmark pass or provider success.
 
-The red multi-file reports now include the `submission_status` field directly
+The failed multi-file reports include the `submission_status` field directly
 inside the JSON artifact. The full report index is in `reports/README.md`.
 
 ## Honest Reading
@@ -174,5 +174,5 @@ inside the JSON artifact. The full report index is in `reports/README.md`.
 - Cost evidence is aggregated in `reports/submission_cost_summary.json`, which
   keeps live report spend separate from `$0.00` fixture evidence.
 - Full live benchmark coverage is still thinner than fixture coverage. The repo
-  now proves multi-provider connectivity, one green Gemini end-to-end coding
-  run, and an honest red live comparison for the same task.
+  proves multi-provider connectivity, selected live end-to-end coding runs, and
+  preserves failed live attempts without counting them as passes.

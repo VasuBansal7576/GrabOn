@@ -1,6 +1,6 @@
 {
-  "submission_status": "RED_PRESERVED_FAILURE_NOT_A_PASS",
-  "submission_note": "Failed older NVIDIA task-03 attempt kept as raw evidence. The green NVIDIA live coding artifact is combo_nvidia_mistral_live_task03.json.",
+  "submission_status": "LIVE_ATTEMPT_FAILED_NOT_CLAIMED",
+  "submission_note": "Failed older NVIDIA task-03 attempt kept as raw evidence. The passing NVIDIA live coding artifact is combo_nvidia_mistral_live_task03.json.",
   "combo": "nvidia",
   "run_mode": "live",
   "provider_models": [

@@ -1,6 +1,6 @@
 {
-  "submission_status": "RED_PRESERVED_FAILURE_NOT_A_PASS",
-  "submission_note": "Failed live Groq multi-file stress attempt kept as raw evidence. This does not count as a passing benchmark or live multi-file success.",
+  "submission_status": "LIVE_ATTEMPT_FAILED_NOT_CLAIMED",
+  "submission_note": "Failed live Groq multi-file stress attempt kept as raw evidence. This is not counted as a passing benchmark or live multi-file success.",
   "combo": "groq",
   "run_mode": "live",
   "provider_models": [

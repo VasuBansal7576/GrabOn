@@ -109,24 +109,28 @@ reports with paired sign-test p-values. In the latest rerun:
 
 Raw artifacts live in `reports/`.
 
-## Submission Evidence Matrix
+## Assignment Requirement Checklist
 
-This table is the source of truth for what the submitted repo claims. A green
-row counts as supporting evidence. A red row is preserved failure evidence, not
-a success claim.
+This table is the source of truth for what the submitted repo claims. It
+separates reproducible offline evidence from live-provider evidence so the
+benchmark story is auditable instead of implied.
 
-| Requirement / Claim | Status | Evidence | What It Counts As |
+| Assignment Requirement | Status | Evidence | Notes |
 |---|---|---|---|
-| Real target repo with tests | GREEN | `target/httpx` setup plus index/test commands below | Assignment minimum bar |
-| Retrieval beats simple search | GREEN | `reports/retrieval_recall.json` | 18-query recall comparison |
-| Full offline benchmark harness | GREEN FIXTURE | `reports/combo_a_full.json`, `reports/combo_b_full.json` | Reproducible loop/scoring proof, not live model proof |
-| Two live provider routes | GREEN SMOKE | `reports/provider_stage_smoke_nvidia_mistral.json`, `reports/provider_stage_smoke_groq.json` | Stage routing proof |
-| Live Gemini coding run | GREEN LIVE | `reports/combo_a_live_smoke.json` | One end-to-end live coding task |
-| Live NVIDIA coding run | GREEN LIVE | `reports/combo_nvidia_mistral_live_task03.json` | One end-to-end live coding task |
-| Live Groq coding run | GREEN LIVE | `reports/combo_groq_live_task03.json` | One end-to-end live coding task with non-zero tracked cost |
-| Live 3+ file stress task | RED PRESERVED | `reports/combo_groq_live_task08_multifile.json` and NVIDIA/Gemini task-08 attempts | Known remaining failure, not counted as pass |
-| Cost tracking | GREEN STRUCTURAL | `reports/submission_cost_summary.json` plus per-task JSON cost fields | Per-run cost accounting; fixture cost is correctly `$0.00` |
-| Vector DB wording from PDF | PARTIAL / HONEST | `src/indexer/vector_store.py`, `src/indexer/semantic_embeddings.py` | Local SQLite vector fallback, not hosted dense-vector RAG |
+| Real open-source codebase with 50+ files and tests | Pass | `target/httpx` setup plus index/test commands below | Uses pinned `httpx==0.28.1`, not a toy repo. |
+| Parse into chunks, embed, store in vector DB | Pass with design note | `src/indexer/tree_index.py`, `src/indexer/vector_store.py`, `src/indexer/semantic_embeddings.py` | Uses code chunks, deterministic local embeddings, and SQLite vector storage as fallback; not a hosted dense-vector service. |
+| Retrieve source, imports, tests, README conventions | Pass | `src/retrieval/tools.py`, `src/retrieval/navigator.py` | Typed tools cover source, imports, references, tests, examples, and docs. |
+| Better than whole repo / simple search, recall on 10 queries | Pass | `reports/retrieval_recall.json` | 18 labeled queries; tree recall `0.8444` vs grep recall `0.3185`. |
+| Generate-test-fix loop, max 5 iterations, report failure | Pass | `src/agent/loop.py`, benchmark reports | Loop retrieves, generates, verifies, retries, and reports exhausted failures. |
+| Multi-model routing by stage | Pass | `src/agent/router.py`, provider smoke reports | Cheap/capable stage routing exists; live stage smoke covers Groq and NVIDIA. |
+| Cost per task per stage | Pass | `reports/submission_cost_summary.json`, per-task `cost_breakdown` | Fixture cost is correctly `$0.00`; live Groq task has non-zero tracked cost. |
+| Three verification layers before done | Pass | live task reports and verification modules | Passing live artifacts show static, pytest, and reviewer all true. |
+| Task queue interface | Pass for local demo | `src/queue/task_queue.py`, `src/queue/dashboard.py` | Local threadpool queue with status, result, cost/time, and snapshot persistence; not a distributed production queue. |
+| 10+ coding tasks with pass rate, iterations, cost, time | Pass | `reports/combo_a_full.json`, `reports/combo_b_full.json` | 12-task fixture benchmark with full report fields. |
+| Compare at least 2 model combinations | Pass with evidence split | `reports/comparison_a_vs_b_fixture.json`, `reports/comparison_nvidia_vs_groq_live_task03.json` | Full comparison is fixture-mode; live comparison exists for task 03. |
+| Deep-dive 3+ file live stress task | Attempted, not claimed as pass | task-08 live attempt reports | Current preserved live attempts failed on provider quota/timeout or malformed multi-file diffs. |
+| Impossible task detection | Pass | `reports/combo_a_full.json`, `reports/combo_b_full.json` | Task 10 is detected as impossible in fixture benchmark. |
+| Opus not used for error parsing | Pass | `src/agent/router.py` | Error parsing routes to cheap models/deterministic parsing, not Opus. |
 
 See `reports/README.md` for the full artifact-by-artifact label table.
 
@@ -212,8 +216,8 @@ uv run python -m src cost-report --reports-dir reports --output reports/submissi
 
 - The reproducible benchmark path is still `fixture` by default. The generator
   uses deterministic task templates unless `--live` is enabled.
-- Live provider routing has green smoke evidence for Gemini + NVIDIA in
-  `reports/provider_smoke_live.json`, and green NVIDIA stage-smoke evidence
+- Live provider routing has smoke evidence for Gemini + NVIDIA in
+  `reports/provider_smoke_live.json`, and NVIDIA stage-smoke evidence
   across planning, context ranking, error parsing, test analysis, and review in
   `reports/provider_stage_smoke_nvidia_mistral.json`.
 - `reports/combo_a_live_smoke.json` is a real Gemini live coding run that passed
@@ -224,14 +228,14 @@ uv run python -m src cost-report --reports-dir reports --output reports/submissi
 - `reports/combo_groq_live_task03.json` is a real Groq live coding run that
   passed retrieval, patch generation, static checks, pytest, and Groq reviewer
   checks with non-zero tracked cost.
-- The preserved multi-file live attempts are still red:
+- The preserved multi-file live attempts did not pass:
   `reports/combo_nvidia_llama70b_live_task07_multifile.json` timed out during
   generation, `reports/combo_nvidia_llama70b_live_task08_multifile.json`
   exhausted 5 iterations with corrupt provider diffs, and
   `reports/combo_groq_live_task08_multifile.json` still fails on the
   `httpx/__init__.py` export patch. They are kept as raw evidence, not marketed
-  as success. Each red JSON report now also has a top-level
-  `submission_status` field so it cannot be mistaken for a green artifact.
+  as success. Each failed live-attempt JSON report has a top-level
+  `submission_status` field so it cannot be mistaken for a passing artifact.
 - Live retry paths now call the `refactoring` model stage after a failed
   generation attempt, and deterministic review rejects behavioral source diffs
   that do not add or update focused tests.
@@ -284,7 +288,6 @@ regression test now covers that upgrade path.
 
 1. Try stronger dense embeddings while keeping tree-first traversal.
 2. Add a durable worker queue and richer run history storage.
-3. Get a green second-provider end-to-end coding artifact. Groq is preferred if
-   a key is available; NVIDIA remains the fallback provider.
+3. Improve live multi-file patch reliability for the task-08 stress case.
 4. Add a secrets-enabled CI workflow for optional live provider smoke runs.
 5. Generalize navigator priors beyond the pinned `httpx` assignment target.
