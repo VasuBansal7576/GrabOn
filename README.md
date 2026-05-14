@@ -153,10 +153,15 @@ See `reports/README.md` for the full artifact-by-artifact label table.
 
 ## Quickstart
 
+Fresh clone to first local agent run:
+
 ```bash
+git clone https://github.com/VasuBansal7576/GrabOn.git
+cd GrabOn
 uv sync
 git clone --depth 1 --branch 0.28.1 https://github.com/encode/httpx target/httpx
 uv run python -m src index --path target/httpx
+uv run python -m src submit "Add a timeout_seconds property to Request class" --path target/httpx
 ```
 
 For a fresh Ubuntu/macOS evaluator run, use the offline path first:
@@ -224,6 +229,22 @@ uv run python -m src dashboard "Add a timeout_seconds property to Request class"
 - `reports/`: latest benchmark, retrieval, comparison, and live smoke outputs.
 - `src/`: implementation.
 - `tests/`: repo test suite.
+
+## Folder Structure
+
+```text
+src/
+  agent/          planner, generator, router, and retry loop
+  eval/           benchmark runner, retrieval eval, comparison, cost report
+  indexer/        AST parsing, tree index, local vector fallback
+  queue/          local task queue and Rich dashboard
+  retrieval/      typed retrieval tools, registry, navigator
+  verification/   static checks, pytest sandbox, reviewer
+eval/tasks/       12 benchmark task definitions
+reports/          raw fixture, live, retrieval, comparison, and cost reports
+tests/            project regression tests
+target/httpx/     pinned external target repo, gitignored after setup
+```
 
 ## Verified Locally
 
@@ -293,6 +314,22 @@ uv run python -m src cost-report --reports-dir reports --output reports/submissi
 The repo tracks per-stage and per-task cost in `TaskResult` plus benchmark JSON.
 Fixture reports correctly show `$0.00` because they do not spend provider tokens.
 Live reports should be used for submission cost claims, not fixture reports.
+
+Current tracked cost numbers from raw reports:
+
+| Cost Question | Current Number | Source |
+|---|---:|---|
+| Recorded live provider spend across committed report artifacts | `$0.01598541` | `reports/submission_cost_summary.json` |
+| One full live Groq agent run, task 03 | `$0.00097406` | `reports/combo_groq_live_task03.json` |
+| One live NVIDIA multi-file stress run, task 08 | `$0.00` under current free-tier accounting | `reports/combo_nvidia_mistral_live_task08_multifile.json` |
+| One full fixture eval run, combo A | `$0.00` | `reports/combo_a_full.json` |
+| One full fixture eval run, combo B | `$0.00` | `reports/combo_b_full.json` |
+
+Development-process provider spend for this submitted agent is estimated from
+the recorded live/eval artifacts in this repo: `$0.01598541`. Interactive
+Codex/ChatGPT work was not billed through the agent runtime, so the repo's cost
+reports intentionally separate agent/eval provider spend from external
+subscription usage.
 
 Current committed cost/evidence files:
 
