@@ -114,8 +114,9 @@ Current configured combos in code:
 Groq and NVIDIA are both supported live second-provider routes. Groq is the
 preferred coding-provider route because it gives separate cheap and capable
 models; NVIDIA remains useful for free-tier proof. The Mistral-small NIM route
-and the Groq route both have green task-03 live coding artifacts, while deeper
-multi-file attempts remain red.
+and the Groq route both have green task-03 live coding artifacts. NVIDIA
+Mistral also has a green task-08 multi-file live artifact; older NVIDIA/Groq
+multi-file attempts remain preserved as failed regression history.
 
 ## Failure Recovery
 
@@ -139,7 +140,9 @@ That makes iteration meaningfully different from the previous attempt.
   local SQLite vector database is fallback.
 - Live provider support now has green Gemini + NVIDIA smoke evidence, green
   NVIDIA and Groq stage-smoke evidence, one real Gemini end-to-end coding smoke
-  artifact, and real NVIDIA plus Groq task-03 coding artifacts.
-- The deep multi-file live proof is still the weakest remaining live evidence:
-  NVIDIA Llama/Mistral attempts for task 07/08 and the Groq task-08 attempt are
-  preserved, but red due timeout/corrupt diffs or an unapplied export patch.
+  artifact, real NVIDIA plus Groq task-03 coding artifacts, and a real NVIDIA
+  Mistral task-08 multi-file coding artifact.
+- The deep multi-file story is now mixed rather than red: the current NVIDIA
+  Mistral task-08 artifact passes in 2 iterations, while older NVIDIA Llama,
+  older NVIDIA task-08, Groq task-08, and Gemini quota-limited task-08 attempts
+  remain preserved as failed history instead of being counted as passes.

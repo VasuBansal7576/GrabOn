@@ -103,27 +103,27 @@ class ToolRegistry:
         """List all registered tools with their schemas."""
         return list(self._tools.values())
 
-    async def execute(self, name: str, **kwargs: Any) -> Any:
+    async def execute(self, tool_name: str, **kwargs: Any) -> Any:
         """Execute a tool by name with timeout enforcement and failure simulation.
 
         Returns structured result (Pydantic model).
         Raises ToolTimeoutError, ToolUnreliableError, or ToolNotFoundError.
         """
-        if name not in self._tools:
-            raise ToolNotFoundError(f"Tool '{name}' not found")
+        if tool_name not in self._tools:
+            raise ToolNotFoundError(f"Tool '{tool_name}' not found")
 
-        schema = self._tools[name]
-        executor = self._executors[name]
+        schema = self._tools[tool_name]
+        executor = self._executors[tool_name]
 
         # Simulate unreliable tool failure
         if schema.is_unreliable and random.random() < schema.failure_rate:
             logger.warning(
                 "tool_unreliable_failure",
-                tool_name=name,
+                tool_name=tool_name,
                 failure_rate=schema.failure_rate,
             )
             raise ToolUnreliableError(
-                f"Tool '{name}' failed (simulated, {schema.failure_rate:.0%} failure rate)"
+                f"Tool '{tool_name}' failed (simulated, {schema.failure_rate:.0%} failure rate)"
             )
 
         # Execute with timeout
@@ -140,18 +140,18 @@ class ToolRegistry:
             elapsed = time.monotonic() - start
             logger.error(
                 "tool_timeout",
-                tool_name=name,
+                tool_name=tool_name,
                 timeout=schema.timeout_seconds,
                 elapsed_ms=round(elapsed * 1000),
             )
             raise ToolTimeoutError(
-                f"Tool '{name}' timed out after {schema.timeout_seconds}s"
+                f"Tool '{tool_name}' timed out after {schema.timeout_seconds}s"
             ) from exc
 
         elapsed = time.monotonic() - start
         logger.info(
             "tool_executed",
-            tool_name=name,
+            tool_name=tool_name,
             input_keys=list(kwargs.keys()),
             elapsed_ms=round(elapsed * 1000),
         )

@@ -74,8 +74,25 @@ flowchart LR
 ## Latest Verified Results
 
 Benchmark and retrieval numbers below were rerun locally on May 13, 2026.
-Live provider smoke and Gemini live-coding evidence were refreshed on May 13,
-2026.
+Live provider smoke and live-coding evidence were refreshed on May 13, 2026.
+
+### How To Read The Eval
+
+There are two deliberately separate proof paths:
+
+1. `fixture` mode is the reproducible regression benchmark. It uses
+   deterministic task templates so a fresh clone can verify retrieval,
+   patch application, sandboxed static analysis, pytest, reviewer gates,
+   retry behavior, impossible-task detection, cost accounting, and report
+   generation without API keys.
+2. `--live` mode disables those templates and requires real provider calls for
+   generation/review. This is the agent proof path for provider behavior,
+   live retry behavior, and interview stress tests.
+
+The `12/12` benchmark below is therefore not presented as 12 live LLM coding
+runs. The live evidence is stored separately in `reports/` and can be refreshed
+with `make live-smoke` and `make live-stress` when provider API keys are
+available.
 
 ### Benchmark
 
@@ -140,6 +157,22 @@ See `reports/README.md` for the full artifact-by-artifact label table.
 uv sync
 git clone --depth 1 --branch 0.28.1 https://github.com/encode/httpx target/httpx
 uv run python -m src index --path target/httpx
+```
+
+For a fresh Ubuntu/macOS evaluator run, use the offline path first:
+
+```bash
+make setup
+make test
+make eval-a
+make eval-b
+```
+
+Provider-backed checks are API-key required:
+
+```bash
+make live-smoke
+make live-stress
 ```
 
 ## Environment
@@ -214,8 +247,10 @@ uv run python -m src cost-report --reports-dir reports --output reports/submissi
 
 ## Honest Limits
 
-- The reproducible benchmark path is still `fixture` by default. The generator
-  uses deterministic task templates unless `--live` is enabled.
+- The reproducible benchmark path is still `fixture` by default. It is an
+  offline regression harness, not a claim that every benchmark task was solved
+  by a live model call. The generator uses deterministic task templates unless
+  `--live` is enabled.
 - Live provider routing has smoke evidence for Gemini + NVIDIA in
   `reports/provider_smoke_live.json`, and NVIDIA stage-smoke evidence
   across planning, context ranking, error parsing, test analysis, and review in

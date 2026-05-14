@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from pathlib import Path
 
 from src.agent import router as router_module
@@ -57,6 +58,19 @@ def test_registry_get_tool() -> None:
     )
     schema = registry.get("my_tool")
     assert schema.name == "my_tool"
+
+
+def test_registry_tool_arguments_can_include_name() -> None:
+    registry = ToolRegistry()
+    registry.register(
+        name="find_references",
+        description="Reference lookup",
+        execute_fn=lambda name: f"refs:{name}",
+    )
+
+    result = asyncio.run(registry.execute("find_references", name="Request"))
+
+    assert result == "refs:Request"
 
 
 def test_registry_tool_not_found() -> None:

@@ -5,8 +5,9 @@
 
 The repo is in **implementation-complete mode**. The user approved the plan and
 asked for the whole build. Future changes should preserve the vertical-slice
-shape in `IMPLEMENTATION_PLAN.md`, keep raw benchmark numbers honest, and avoid
-rewriting unrelated docs or generated artifacts.
+shape described in `README.md`, `ARCHITECTURE.md`, `RETRIEVAL.md`, and
+`EVAL.md`, keep raw benchmark numbers honest, and avoid rewriting unrelated
+docs or generated artifacts.
 
 ## Agent Skills
 
@@ -14,28 +15,27 @@ These are process rules adapted from Matt Pocock's engineering skills and the
 planning lenses chosen for this project.
 
 ### Issue Tracker
-Local Markdown issues live in `docs/issues/` until the user asks to publish
-GitHub Issues. See `docs/agents/issue-tracker.md`.
+If new follow-up work is needed, keep it in the submission-facing docs or add a
+small local Markdown issue only when the user asks for that workflow.
 
 ### Triage Labels
-Use the canonical label vocabulary in `docs/agents/triage-labels.md`.
+Use plain labels tied to the assignment requirements: retrieval, generation,
+verification, iteration, cost tracking, task queue, eval, docs, or setup.
 
 ### Domain Docs
-This is a single-context repo. Read `CONTEXT.md` before changing planning docs
-or implementation modules. ADRs live in `docs/adr/`. See
-`docs/agents/domain.md`.
+This is a single-context repo. Treat `README.md`, `ARCHITECTURE.md`,
+`RETRIEVAL.md`, `EVAL.md`, and `docs/adr/` as the durable source of truth before
+changing implementation modules or submission-facing docs.
 
 ### Grill Me / Grill With Docs
 Before major implementation, walk the design tree. If a question can be
 answered by repo exploration, answer it from the repo instead of asking the
-user. Record durable domain terms in `CONTEXT.md` and hard-to-reverse tradeoffs
-as ADRs.
+user. Record hard-to-reverse tradeoffs as ADRs.
 
 ### To PRD
-Use `PRD.md` as the product requirement source. It should describe behavior,
-user stories, implementation decisions, testing decisions, out of scope, and
-further notes. Do not put stale code snippets or file paths in the PRD unless
-they encode a decision more precisely than prose.
+Use `README.md` plus `EVAL.md` as the product and evaluation requirement source.
+Do not add stale code snippets or file paths to submission docs unless they
+encode a decision more precisely than prose.
 
 ### To Issues
 Break work into tracer-bullet vertical slices. Each slice must cut through the
@@ -57,23 +57,26 @@ Every planned module must map to one Assignment 05 requirement: retrieval,
 generation, verification, iteration, cost tracking, task queue, or eval.
 
 ### Premortem
-Before coding, check `PREMORTEM.md`. A high-risk rejection reason must either be
-closed by the plan or explicitly accepted as remaining risk.
+Before coding, check the README's honest limits and the live-vs-fixture evidence
+split. A high-risk rejection reason must either be closed by the change or
+explicitly accepted as remaining risk.
 
 ### Steelman
-Before defending tree-first retrieval, read `STEELMAN.md` and
-`docs/adr/0001-tree-first-retrieval.md`. The plan must be able to answer why it
-does not start with vector DB despite the PDF wording.
+Before defending tree-first retrieval, read
+`docs/adr/0001-tree-first-retrieval.md`. The plan must be able to explain why
+the implementation is tree-first while still keeping a local SQLite vector
+fallback for the PDF's chunk/embed/store requirement.
 
 ### Red Team
-Before final submission, run the checks in `RED_TEAM.md`. Do not mark the plan
-submission-ready while setup, retrieval, verification, benchmark, or README
-red-team checks are unresolved.
+Before final submission, run the README verified-local commands plus
+API-key-backed `make live-smoke` / `make live-stress` when keys are available.
+Do not mark the repo submission-ready while setup, retrieval, verification,
+benchmark, or README evidence checks are unresolved.
 
 ## What You Are Building
 A coding agent that takes a natural-language task, retrieves relevant context
-from the httpx codebase using a tree-index (no vector DB, no embeddings),
-generates code, runs 3-layer verification, and iterates up to 5 times.
+from the httpx codebase using tree-first retrieval with a local SQLite vector
+fallback, generates code, runs 3-layer verification, and iterates up to 5 times.
 If it cannot fix after 5 iterations, it explains why.
 
 ## Execution Order
@@ -110,6 +113,8 @@ grabonai-coder/
 │   ├── indexer/
 │   │   ├── ast_parser.py        # tree-sitter parsing → structured units
 │   │   ├── tree_index.py        # tree index builder + serializer
+│   │   ├── semantic_embeddings.py # deterministic local code embeddings
+│   │   ├── vector_store.py      # SQLite vector fallback store
 │   │   └── indexer.py           # main indexer entry point
 │   ├── retrieval/
 │   │   ├── tools.py             # 7 typed retrieval tools
