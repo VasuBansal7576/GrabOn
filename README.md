@@ -218,8 +218,6 @@ uv run python -m src dashboard "Add a timeout_seconds property to Request class"
 
 - `ARCHITECTURE.md`: agent loop, routing, verification, queue, and system shape.
 - `SYSTEM_DESIGN.md`: visual Mermaid architecture for quick evaluator review.
-- `LOOM_DEMO_GUIDE.md`: recording script, live-demo commands, and the
-  tree-first-vs-traditional-RAG rationale.
 - `RETRIEVAL.md`: index schema, navigation behavior, fallback search, and recall
   protocol.
 - `EVAL.md`: benchmark tasks, retrieval eval corpus, and report formats.
